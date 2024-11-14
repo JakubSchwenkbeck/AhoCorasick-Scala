@@ -25,6 +25,11 @@ class FiniteStateMachine(SearchText: String, Keywords : List[String],InputStates
           currentStateID = fail(currentStateID)
         } else {
           currentStateID = gotoOutput
+          val currentStateOpt: Option[State] = states.get(currentStateID)
+           currentStateOpt match {
+             case Some(currentState) => if (currentState.endState){Output.appended(currentStateID)}
+             case None =>
+           }
 
         }
       }
@@ -41,10 +46,6 @@ class FiniteStateMachine(SearchText: String, Keywords : List[String],InputStates
     currentStateOpt match {
       case Some(currentState) =>
         // Need to check if EndState!! --> output
-        if (currentState.endState) {
-          println(s"Reached endState at ${currentStateID}")
-          0}
-        else {
 
           // Access the Successor map of the current state
           currentState.Successor.get(input) match {
@@ -57,7 +58,7 @@ class FiniteStateMachine(SearchText: String, Keywords : List[String],InputStates
               -1
           }
 
-        }
+
 
       case None =>
         -1 // tell PMM to fail
