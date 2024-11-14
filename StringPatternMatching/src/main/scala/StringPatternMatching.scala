@@ -11,4 +11,3 @@ def main() : Unit =
   var FSM = FiniteStateMachine(TEST_SearchString,TEST_Keywords)
   print(s"${FSM.PMM()}" + "\n")
   printGraph(buildGraph(TEST_Keywords))
-
