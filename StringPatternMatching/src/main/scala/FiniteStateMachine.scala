@@ -18,21 +18,24 @@ class FiniteStateMachine(SearchText: String, Keywords : List[String]) {
 
   def PMM() : List[Int] =
     var Output: List[Int] = List()
-    for (i <- 0 until keywords.length ){
-      for (j <- 0 until keywords(i).length) {
-        var gotoOutput: Int = goto(keywords(i).charAt(j).toString)
-        if (gotoOutput == -1) {
-          currentStateID = fail(currentStateID)
-        } else {
-          currentStateID = gotoOutput
-          val currentStateOpt: Option[State] = states.get(currentStateID)
-           currentStateOpt match {
-             case Some(currentState) => if (currentState.endState){
-               Output = Output :+ currentStateID }// Reassign Output with the new list             }
-             case None =>
-           }
+    var charPos: Int = 0
+    for(index <- 0 until text.length) {
+          //println(currentStateID)
+          charPos += 1
+          var gotoOutput: Int = goto(text.charAt(index).toString)
+          if (gotoOutput == -1) {
+            currentStateID = fail(currentStateID)
+          } else {
+            currentStateID = gotoOutput
+            val currentStateOpt: Option[State] = states.get(currentStateID)
+            currentStateOpt match {
+              case Some(currentState) => if (currentState.endState) {
+                Output = Output :+ charPos
+              } // Reassign Output with the new list             }
+              case None =>         throw Exception(s"This State ID: ${currentStateID} does not exist!")
 
-        }
+            }
+
       }
     }
       Output
@@ -70,7 +73,7 @@ class FiniteStateMachine(SearchText: String, Keywords : List[String]) {
   // TODO Implement fail function from state to State!!
 
   def fail(stateID : Int): Int =
-    println(s"nothing ${stateID}")
+    //println(s"nothing ${stateID}")
 
 
 
