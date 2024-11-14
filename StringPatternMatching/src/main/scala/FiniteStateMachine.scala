@@ -56,14 +56,14 @@ class FiniteStateMachine(SearchText: String, Keywords : List[String]) {
                 nextStateID
               case None =>
                 // If there's no matching input in the Successor map, tell PMM to call fail
-                -1
+                if(currentStateID == 0){0}else{-1}
             }
           } else {-1}
 
 
 
       case None =>
-        -1 // tell PMM to fail
+        throw Exception(s"This State ID: ${currentStateID} does not exist!")
     }
 
 
