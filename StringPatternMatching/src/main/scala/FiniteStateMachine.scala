@@ -67,16 +67,14 @@ class FiniteStateMachine(SearchText: String, Keywords : List[String]) {
     }
 
 
-
-
-
-
-
+  // TODO Implement fail function from state to State!!
 
   def fail(stateID : Int): Int =
-    println("nothing")
+    println(s"nothing ${stateID}")
 
-    -1
+
+
+    0
 
 }
 
