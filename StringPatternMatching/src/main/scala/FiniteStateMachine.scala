@@ -17,7 +17,7 @@ class FiniteStateMachine(SearchText: String, Keywords : List[String],InputStates
 
 
   def PMM() : List[Int] =
-    val Output: List[Int] = List()
+    var Output: List[Int] = List()
     for (i <- 0 until keywords.length ){
       for (j <- 0 until keywords(i).length) {
         var gotoOutput: Int = goto(keywords(i).charAt(j).toString)
@@ -28,8 +28,7 @@ class FiniteStateMachine(SearchText: String, Keywords : List[String],InputStates
           val currentStateOpt: Option[State] = states.get(currentStateID)
            currentStateOpt match {
              case Some(currentState) => if (currentState.endState){
-                Output :+ currentStateID
-             }
+               Output = Output :+ currentStateID }// Reassign Output with the new list             }
              case None =>
            }
 
