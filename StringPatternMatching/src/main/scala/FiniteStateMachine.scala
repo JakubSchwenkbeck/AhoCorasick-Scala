@@ -5,9 +5,9 @@ case class State(ID : Integer , Successor : Map[String,Int], endState : Boolean)
 
 
 
-class FiniteStateMachine(SearchText: String, Keywords : List[String],InputStates : Map[Int, State]) {
+class FiniteStateMachine(SearchText: String, Keywords : List[String]) {
 
-  private val states: Map[Int, State] = InputStates
+  private val states: Map[Int, State] = buildGraph(Keywords)
   private var text: String = SearchText
   private var keywords: List[String] = Keywords // each Keyword needs to be processed char by char by goto
 
