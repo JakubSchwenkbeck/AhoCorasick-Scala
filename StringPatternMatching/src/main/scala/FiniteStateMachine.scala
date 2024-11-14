@@ -17,11 +17,12 @@ class FiniteStateMachine(SearchText: String, Keywords : List[String],InputStates
 
 
   def PMM() : List[Int] =
-    for (i <- keywords.length ){
-      for (j <- keywords(i).length) {
+    var Output : List[Int]  = List()
+    for (i <- 0 until keywords.length ){
+      for (j <- 0 until keywords(i).length) {
         var gotoOutput: Int = goto(keywords(i).charAt(j).toString)
         if (gotoOutput == -1) {
-          currentStateID = fail()
+          currentStateID = fail(currentStateID)
         } else {
           currentStateID = gotoOutput
 
@@ -34,7 +35,7 @@ class FiniteStateMachine(SearchText: String, Keywords : List[String],InputStates
 
 
 
-  def goto(input: String): Int =
+  private def goto(input: String): Int =
     val currentStateOpt: Option[State] = states.get(currentStateID)
 
     currentStateOpt match {
@@ -52,16 +53,14 @@ class FiniteStateMachine(SearchText: String, Keywords : List[String],InputStates
               currentStateID = nextStateID
               nextStateID
             case None =>
-              // If there's no matching input in the Successor map, call the fail function
-              fail()
+              // If there's no matching input in the Successor map, tell PMM to call fail
               -1
           }
 
         }
 
       case None =>
-        fail()
-        -1
+        -1 // tell PMM to fail
     }
 
 
@@ -71,7 +70,7 @@ class FiniteStateMachine(SearchText: String, Keywords : List[String],InputStates
 
 
 
-  def fail(): Int =
+  def fail(stateID : Int): Int =
     println("nothing")
 
     -1
