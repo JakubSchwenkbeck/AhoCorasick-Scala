@@ -9,11 +9,30 @@ class FiniteStateMachine(SearchText: String, Keywords : List[String],InputStates
 
   private val states: Map[Int, State] = InputStates
   private var text: String = SearchText
-  private var keywords: List[String] = Keywords
+  private var keywords: List[String] = Keywords // each Keyword needs to be processed char by char by goto
 
   private var currentStateID: Int = 0
 
   def getCurrentStateID: Int = currentStateID
+
+
+  def PMM() : List[Int] =
+    for (i <- keywords.length ){
+      for (j <- keywords(i).length) {
+        var gotoOutput: Int = goto(keywords(i).charAt(j).toString)
+        if (gotoOutput == -1) {
+          currentStateID = fail()
+        } else {
+          currentStateID = gotoOutput
+
+        }
+      }
+    }
+      List(1,2,3)
+
+
+
+
 
   def goto(input: String): Int =
     val currentStateOpt: Option[State] = states.get(currentStateID)
@@ -52,8 +71,10 @@ class FiniteStateMachine(SearchText: String, Keywords : List[String],InputStates
 
 
 
-  def fail(): Unit =
+  def fail(): Int =
     println("nothing")
+
+    -1
 
 }
 
