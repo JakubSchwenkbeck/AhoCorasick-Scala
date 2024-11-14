@@ -44,13 +44,17 @@ def buildGraph(keywords: List[String]): Map[Int, State] = {
     }
 
     // Mark the last state of the keyword as an end state
-    states = states.updated(currentStateID, states(currentStateID).copy(endState = true))
-  }
+    val finalState = states(currentStateID)
+    states += currentStateID -> finalState.copy(endState = true, keyword = Some(keyword))  }
 
   states
 }
 def printGraph(states: Map[Int, State]): Unit = {
   states.foreach { case (id, state) =>
-    println(s"State $id: Successors = ${state.Successor}, End State = ${state.endState}")
+    val keywordStr = state.keyword match {
+      case Some(kw) => s", Keyword = $kw"
+      case None => ""
+    }
+    println(s"State $id: Successors = ${state.Successor}, End State = ${state.endState}$keywordStr")
   }
 }
