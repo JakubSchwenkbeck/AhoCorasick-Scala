@@ -1,7 +1,7 @@
 // This class defines a finite state machine which pattern matches string inputs with the keywords
 
 
-case class State(ID : Integer , Successor : Map[String,Int], endState : Boolean) // all states have an own ID and a single successor which is mapped by its input, also known by its ID
+case class State(ID : Integer , Successor : Map[String,Int], endState : Boolean, keyword: Option[String] = None) // all states have an own ID and a single successor which is mapped by its input, also known by its ID
 
 
 
@@ -20,7 +20,7 @@ class FiniteStateMachine(SearchText: String, Keywords : List[String]) {
     var Output: List[Int] = List()
     var charPos: Int = 0
     for(index <- 0 until text.length) {
-          //println(currentStateID)
+          //  println(currentStateID)
           charPos += 1
           var gotoOutput: Int = goto(text.charAt(index).toString)
           if (gotoOutput == -1) {
