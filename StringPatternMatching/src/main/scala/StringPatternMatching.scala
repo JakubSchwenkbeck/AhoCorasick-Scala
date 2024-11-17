@@ -6,8 +6,9 @@
 
 @main
 def main() : Unit =
-  val TEST_SearchString : String = "This is her Testshe"
-  val TEST_Keywords : List[String] = List("his", "her", "she")
+  val TEST_SearchString: String = "Scala is a functional programming language that is powerful, concise, and expressive. Many developers enjoy using Scala because of its support for both object-oriented and functional paradigms."
+  val TEST_Keywords: List[String] = List("Scala", "functional", "language", "powerful", "object-oriented", "paradigms", "developers", "support")
+
   val FSM = FiniteStateMachine(TEST_SearchString,TEST_Keywords)
  // print(s"${FSM.PMM()}" + "\n")
   prettyprint(FSM.PMM(),TEST_SearchString)
@@ -18,10 +19,11 @@ def main() : Unit =
 
 
 
-def prettyprint(ls : List[(Int, String)],fulltext : String) : Unit =
+def prettyprint(ls : List[(Int, String)], fulltext : String) : Unit =
   if(ls.isEmpty){
     println("No keyword could be matched in the String : " + fulltext)
   }else {
+    try{
     // ANSI escape codes for colors
     val RESET = "\u001B[0m"
     val HIGHLIGHT = "\u001B[31m" // Red text
@@ -41,5 +43,11 @@ def prettyprint(ls : List[(Int, String)],fulltext : String) : Unit =
     }
 
     // Print the full highlighted text
-    println(highlightedText)
+    println(highlightedText)}
+    catch{
+      case e : Throwable =>
+      println("Some Error occured! Here are the original string and a list of keywords and their last index inside the string: ")
+      println(fulltext)
+      println(ls)
+    }
   }
