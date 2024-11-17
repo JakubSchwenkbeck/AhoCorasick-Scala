@@ -7,7 +7,7 @@ case class State(ID: Integer, Successor: Map[String, Int], endState: Boolean, ke
 class FiniteStateMachine(SearchText: String, Keywords: List[String]) {
 
   private val states: Map[Int, State] = buildGraph(Keywords)
-  private var text: String = SearchText
+  private val text: String = SearchText
   private var keywords: List[String] = Keywords // each Keyword needs to be processed char by char by goto
 
   private var currentStateID: Int = 0
@@ -21,7 +21,7 @@ class FiniteStateMachine(SearchText: String, Keywords: List[String]) {
     for (index <- 0 until text.length) {
       //  println(currentStateID)
       charPos += 1
-      var gotoOutput: Int = goto(text.charAt(index).toString)
+      val gotoOutput: Int = goto(text.charAt(index).toString)
       if (gotoOutput == -1) {
         currentStateID = fail(currentStateID)
       } else {
