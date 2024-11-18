@@ -29,9 +29,12 @@ def main() : Unit =
   //printGraph(buildGraph(TEST_Keywords))
 
 
-
-
-
+/**
+ * Pretty-Print function for the result of the StringPatternMatching, prints the string with highlighted keywords
+ *
+ * @param ls A list of pairs : (index of last Char where keyword was found, keyword) ,so (Integer,String)
+ * @param fulltext The String where substring search is performed on
+ */
 
 def prettyprint(ls : List[(Int, String)], fulltext : String) : Unit =
   if(ls.isEmpty){
