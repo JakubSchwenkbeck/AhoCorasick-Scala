@@ -1,7 +1,4 @@
 
-
-
-// this file is the main entry point for this Project
 /**
  * The entry point for the Finite State Machine (FSM) demonstration.
  *
@@ -29,6 +26,8 @@ def main() : Unit =
   //printGraph(buildGraph(TEST_Keywords))
 
 
+
+// TODO Pretty print fails when a failstate is successfully found!
 /**
  * Pretty-Print function for the result of the StringPatternMatching, prints the string with highlighted keywords
  *
