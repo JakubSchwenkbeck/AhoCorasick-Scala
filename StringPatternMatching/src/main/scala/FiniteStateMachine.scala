@@ -19,10 +19,11 @@ case class State(ID: Integer, Successor: Map[String, Int], endState: Boolean, ke
 
 class FiniteStateMachine(SearchText: String, Keywords: List[String]) {
 
-  private val states: Map[Int, State] = buildGraph(Keywords) // This map represents the finite state machine
+  private var states: Map[Int, State] = buildGraph(Keywords) // This map represents the finite state machine
   private val text: String = SearchText
   private var keywords: List[String] = Keywords
-
+  private var fails : Map[Int,Int] = computeFail(states)
+  
   private var currentStateID: Int = 0 // starting State is by default 0 !
 
   def getCurrentStateID: Int = currentStateID // simple getter for the current ID
@@ -100,14 +101,9 @@ class FiniteStateMachine(SearchText: String, Keywords: List[String]) {
     }
 
 
-  // TODO Implement fail function from state to State!!
-
-  def fail(stateID: Int): Int =
-    //println(s"nothing ${stateID}")
-
-
-
-    0
+  def fail(stateID: Int): Int = {
+    fails(stateID) // Return the fail link for the current state
+  }
 
 }
 
