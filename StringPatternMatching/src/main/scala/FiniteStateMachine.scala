@@ -1,4 +1,3 @@
-// This class defines a finite state machine which pattern matches string inputs with the keywords
 
 /**
  * Case class to store a State in the machine  /  (node) in the graph
@@ -10,6 +9,10 @@
  */
 case class State(ID: Integer, Successor: Map[String, Int], endState: Boolean, keyword: Option[String] = None) // all states have an own ID and a single successor which is mapped by its input, also known by its ID
 
+
+
+
+
 /**
  * Class which holds all the values and logic of building the FiniteStateMachine and performing the PatternMatching
  *
@@ -19,11 +22,11 @@ case class State(ID: Integer, Successor: Map[String, Int], endState: Boolean, ke
 
 class FiniteStateMachine(SearchText: String, Keywords: List[String]) {
 
-  private var states: Map[Int, State] = buildGraph(Keywords) // This map represents the finite state machine
+  private val states: Map[Int, State] = buildGraph(Keywords) // This map represents the finite state machine
   private val text: String = SearchText
   private var keywords: List[String] = Keywords
-  private var fails : Map[Int,Int] = computeFail(states)
-  
+  private val fails : Map[Int,Int] = computeFail(states)
+
   private var currentStateID: Int = 0 // starting State is by default 0 !
 
   def getCurrentStateID: Int = currentStateID // simple getter for the current ID
@@ -55,7 +58,7 @@ class FiniteStateMachine(SearchText: String, Keywords: List[String]) {
 
 
           } // Reassign Output with the new list
-          case None => throw Exception(s"This State ID: ${currentStateID} does not exist!")
+          case None => throw Exception(s"This State ID: $currentStateID does not exist!")
 
         }
 
@@ -97,11 +100,13 @@ class FiniteStateMachine(SearchText: String, Keywords: List[String]) {
 
 
       case None =>
-        throw Exception(s"This State ID: ${currentStateID} does not exist!")
+        throw Exception(s"This State ID: $currentStateID does not exist!")
     }
 
 
-  def fail(stateID: Int): Int = {
+
+
+  def fail(stateID: Int): Int = { // actual magic happens in computeFail
     fails(stateID) // Return the fail link for the current state
   }
 
