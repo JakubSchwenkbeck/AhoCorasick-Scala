@@ -1,27 +1,48 @@
 // This class defines a finite state machine which pattern matches string inputs with the keywords
 
-
+/**
+ * Case class to store a State in the machine  /  (node) in the graph
+ *
+ * @param ID Unique ID / Labeling of the State in the machine / Node in the Graph / Trie
+ * @param Successor Map of Inputs to the ID of the corresponding Successor State
+ * @param endState Boolean which determines end states
+ * @param keyword Option, if end state then the Keyword it represents is stored
+ */
 case class State(ID: Integer, Successor: Map[String, Int], endState: Boolean, keyword: Option[String] = None) // all states have an own ID and a single successor which is mapped by its input, also known by its ID
 
+/**
+ * Class which holds all the values and logic of building the FiniteStateMachine and performing the PatternMatching
+ *
+ * @param SearchText String which holds the Text to be searched
+ * @param Keywords List of Strings with the keyword which should be matched
+ */
 
 class FiniteStateMachine(SearchText: String, Keywords: List[String]) {
 
-  private val states: Map[Int, State] = buildGraph(Keywords)
+  private val states: Map[Int, State] = buildGraph(Keywords) // This map represents the finite state machine
   private val text: String = SearchText
-  private var keywords: List[String] = Keywords // each Keyword needs to be processed char by char by goto
+  private var keywords: List[String] = Keywords
 
-  private var currentStateID: Int = 0
+  private var currentStateID: Int = 0 // starting State is by default 0 !
 
-  def getCurrentStateID: Int = currentStateID
+  def getCurrentStateID: Int = currentStateID // simple getter for the current ID
 
 
+  /**
+   *  This function performs the PatternMatching of the keywords in the SearchString
+   * @return Returns a List of Pairs with Index of the Last char of a keyword and the keyword itself, so List[(Int,String)]
+   */
   def PMM(): List[(Int, String)] =
-    var Output: List[(Int, String)] = List()
+
+    var Output: List[(Int, String)] = List() // empty list
+
     var charPos: Int = 0
     for (index <- 0 until text.length) {
+
       //  println(currentStateID)
       charPos += 1
       val gotoOutput: Int = goto(text.charAt(index).toString)
+
       if (gotoOutput == -1) {
         currentStateID = fail(currentStateID)
       } else {
@@ -32,7 +53,7 @@ class FiniteStateMachine(SearchText: String, Keywords: List[String]) {
            Output =  Output :+ (charPos, currentState.keyword.get)
 
 
-          } // Reassign Output with the new list             }
+          } // Reassign Output with the new list
           case None => throw Exception(s"This State ID: ${currentStateID} does not exist!")
 
         }
@@ -41,6 +62,12 @@ class FiniteStateMachine(SearchText: String, Keywords: List[String]) {
     }
     Output
 
+  /**
+   * GoTo Function performs the action of taking an input and moving in the finite state machine
+   *
+   * @param input String which represents a single Char as input for the current state
+   * @return Returns the ID of the following State, -1 represents fail state
+   */
 
   private def goto(input: String): Int =
     val currentStateOpt: Option[State] = states.get(currentStateID)
