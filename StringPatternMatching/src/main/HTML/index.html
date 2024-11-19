@@ -7,36 +7,35 @@
     <script type="text/javascript" src="../../../target/scala-3.3.4/stringpatternmatching-fastopt.js"></script>
     <style>
         #fsm-graph {
-          position: relative;
-          display: flex;
-          flex-wrap: wrap;
-        }
-        .state {
-          width: 100px;
-          height: 100px;
-          background-color: lightblue;
-          border-radius: 50%;
-          text-align: center;
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+          gap: 20px;
           margin: 20px;
-          line-height: 100px;
-          font-size: 14px;
-          position: absolute;
+          padding: 10px;
+          background-color: #f0f0f0;
+          border: 1px solid #ccc;
         }
+
+        .state {
+          padding: 20px;
+          border: 2px solid black;
+          border-radius: 10px;
+          text-align: center;
+          background-color: white;
+          position: relative;
+        }
+
         .state.end-state {
           background-color: lightgreen;
         }
+
         .transition {
-          position: absolute;
-          margin-top: 10px;
-          margin-left: 10px;
-          cursor: pointer;
+          color: blue;
           font-size: 12px;
-          color: darkblue;
-        }
-        .transition:hover {
-          font-weight: bold;
+          margin-top: 10px;
         }
     </style>
+
 </head>
 <body>
 <h1>Finite State Machine Visualization</h1>
