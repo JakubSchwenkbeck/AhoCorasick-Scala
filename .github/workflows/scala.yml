@@ -32,9 +32,9 @@ jobs:
         cache: 'sbt'
 
     # Step 4: Run tests (if you have a test suite)
-    #- name: Run tests
-    #  working-directory: ./StringPatternMatching
-    #  run: sbt test
+    - name: Run tests
+      working-directory: ./StringPatternMatching
+      run: sbt test
 
     # Step 5: Upload dependency graph (running sbt task)
  #   - name: Upload dependency graph
