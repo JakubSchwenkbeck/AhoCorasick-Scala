@@ -9,5 +9,9 @@ lazy val root = (project in file("."))
     name := "StringPatternMatching",
     scalaJSUseMainModuleInitializer := true,
     libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "2.8.0",
+    // Enable Scala.js to generate JavaScript code and run in a browser
+    scalaJSUseMainModuleInitializer := true
 
   )
+// Specify the target for Scala.js to generate JavaScript files
+scalaJSLinkerConfig ~= { _.withOptimizer(true) }
