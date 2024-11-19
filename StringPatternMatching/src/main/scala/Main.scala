@@ -12,7 +12,7 @@
 def main() : Unit =
   // input for the machine:
   val TEST_SearchString: String = "Scala is a functionally programming language that is powerful, concise, and expressive. Many developers enjoy using Scala because of its support for both object-oriented and functional paradigms."
-  val TEST_Keywords: List[String] = List("Scala", "functional", "functionally","language", "powerful", "object-oriented", "paradigms", "developers", "support")
+  val TEST_Keywords: List[String] = List("Scala", "functional", "language", "powerful", "object-oriented", "paradigms", "developers", "support")
 
 
   // create an object of the FinitStateMachine:
