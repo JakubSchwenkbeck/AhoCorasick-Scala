@@ -18,7 +18,7 @@ def main() : Unit =
   // create an object of the FinitStateMachine:
   val FSM = FiniteStateMachine(TEST_SearchString,TEST_Keywords)
 
-  
+  // commented for sbt run, needs to be in for fastOptJs FSMVisualizer.main()
 
   // print some information :
 
