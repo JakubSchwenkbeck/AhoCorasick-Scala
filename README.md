@@ -60,7 +60,7 @@ This project represents a deep dive into:
    - **Objective**: Develop an intuitive graphical interface to:
      - Visualize the trie structure dynamically as patterns are added.
      - Provide a step-by-step visualization of how patterns are matched in a given text.
-   - **Learning Goal**: Explore Scala GUI frameworks (e.g., JavaFX with Scala bindings) for interactive visualizations.
+   - **Learning Goal**: Explore Scala GUI frameworks, in particular Scala.JS for a clean webbased visualization.
 
 2. **Concurrency**:
    - **Objective**: Optimize the algorithm for large-scale text inputs by leveraging Scala's concurrency capabilities.
