@@ -21,6 +21,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+
+
+    - name: Change directory to StringPatternMatching
+      working-directory: root/StringPatternMatching
+      run: echo "Working in root/StringPatternMatching"
+      
     - name: Set up JDK 11
       uses: actions/setup-java@v4
       with:
