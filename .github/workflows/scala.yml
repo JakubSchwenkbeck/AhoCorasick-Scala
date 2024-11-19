@@ -36,7 +36,7 @@ jobs:
     #  working-directory: ./StringPatternMatching
     #  run: sbt test
 
-    # Step 5: Upload dependency graph
+    # Step 5: Upload dependency graph (running sbt task)
     - name: Upload dependency graph
       working-directory: ./StringPatternMatching
-      uses: scalacenter/sbt-dependency-submission@ab086b50c947c9774b70f39fc7f6e20ca2706c91
+      run: sbt dependencySubmission
