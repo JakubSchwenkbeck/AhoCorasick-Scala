@@ -30,14 +30,13 @@ class FiniteStateMachine(SearchText: String, Keywords: List[String]) {
   private var currentStateID: Int = 0 // starting State is by default 0 !
 
   def getCurrentStateID: Int = currentStateID // simple getter for the current ID
-  
+  def getStates : Map[Int,State] = states
   /**
    *  This function performs the PatternMatching of the keywords in the SearchString
    * @return Returns a List of Pairs with Index of the Last char of a keyword and the keyword itself, so List[(Int,String)]
    */
   def PMM(): List[(Int, String)] =
-    FSMVisualizer.renderFSM(states)
-
+    
     var Output: List[(Int, String)] = List() // empty list
 
     var charPos: Int = 0
