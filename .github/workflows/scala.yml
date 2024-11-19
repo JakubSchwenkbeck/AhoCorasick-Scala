@@ -37,6 +37,6 @@ jobs:
     #  run: sbt test
 
     # Step 5: Upload dependency graph (running sbt task)
-    - name: Upload dependency graph
-      working-directory: ./StringPatternMatching
-      run: sbt dependencySubmission
+ #   - name: Upload dependency graph
+  #    working-directory: ./StringPatternMatching
+   #   run: sbt dependencySubmission
