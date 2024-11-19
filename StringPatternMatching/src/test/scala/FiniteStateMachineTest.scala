@@ -19,6 +19,22 @@ class FiniteStateMachineTest extends AnyFlatSpec with Matchers {
     // Assert that the output matches the expectation
     actualMatches shouldEqual expectedMatches
   }
+    it should "find all matching keywords with keywords which are substrings in the text" in {
+    // Input for the FSM
+    val searchString =
+      "Scala is a functionally programming language that is powerful, concise, and expressive."
+    val keywords = List("Scala", "functional","functionally","language", "powerful", "expressive", "missing")
+
+    // Expected output
+    val expectedMatches = List((5, "Scala"), (21, "functional"), (23, "functionally"),(44, "language"), (61, "powerful"), (86, "expressive"))
+
+    // Instantiate and run the FSM
+    val fsm = FiniteStateMachine(searchString, keywords)
+    val actualMatches = fsm.PMM()
+
+    // Assert that the output matches the expectation
+    actualMatches shouldEqual expectedMatches
+  }
 
   it should "return an empty list if no keywords match" in {
     // Input for the FSM
