@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FSM Visualizer</title>
+    <script type="text/javascript" src="../../../target/scala-3.3.4/stringpatternmatching-fastopt.js"></script>
+    <style>
+        #fsm-graph {
+          position: relative;
+          display: flex;
+          flex-wrap: wrap;
+        }
+        .state {
+          width: 100px;
+          height: 100px;
+          background-color: lightblue;
+          border-radius: 50%;
+          text-align: center;
+          margin: 20px;
+          line-height: 100px;
+          font-size: 14px;
+          position: absolute;
+        }
+        .state.end-state {
+          background-color: lightgreen;
+        }
+        .transition {
+          position: absolute;
+          margin-top: 10px;
+          margin-left: 10px;
+          cursor: pointer;
+          font-size: 12px;
+          color: darkblue;
+        }
+        .transition:hover {
+          font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<h1>Finite State Machine Visualization</h1>
+</body>
+</html>
