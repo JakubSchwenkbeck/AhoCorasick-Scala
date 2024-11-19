@@ -10,11 +10,11 @@ class FiniteStateMachineTest extends AnyFlatSpec with Matchers {
     val keywords = List("Scala", "functional", "language", "powerful", "expressive", "missing")
 
     // Expected output
-    val expectedMatches = List((5,"Scala"), (44,"language"), (61,"powerful"), (81,"expressive"))
+    val expectedMatches = List((5, "Scala"), (21, "functional"), (44, "language"), (61, "powerful"), (86, "expressive"))
 
     // Instantiate and run the FSM
     val fsm = FiniteStateMachine(searchString, keywords)
-    val actualMatches = fsm.PMM() 
+    val actualMatches = fsm.PMM()
 
     // Assert that the output matches the expectation
     actualMatches shouldEqual expectedMatches
@@ -30,7 +30,7 @@ class FiniteStateMachineTest extends AnyFlatSpec with Matchers {
 
     // Instantiate and run the FSM
     val fsm = FiniteStateMachine(searchString, keywords)
-    val actualMatches = fsm.PMM() 
+    val actualMatches = fsm.PMM()
 
     // Assert that the output matches the expectation
     actualMatches shouldEqual expectedMatches
