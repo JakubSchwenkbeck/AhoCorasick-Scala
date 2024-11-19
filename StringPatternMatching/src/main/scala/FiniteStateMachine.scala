@@ -39,32 +39,34 @@ class FiniteStateMachine(SearchText: String, Keywords: List[String]) {
   def PMM(): List[(Int, String)] =
 
     var Output: List[(Int, String)] = List() // empty list
+    if( text.nonEmpty && keywords.nonEmpty) {
+      var charPos: Int = 0
+      for (index <- 0 until text.length) {
 
-    var charPos: Int = 0
-    for (index <- 0 until text.length) {
+        //  println(currentStateID)
+        charPos += 1
+        val gotoOutput: Int = goto(text.charAt(index).toString)
 
-      //  println(currentStateID)
-      charPos += 1
-      val gotoOutput: Int = goto(text.charAt(index).toString)
-
-      if (gotoOutput == -1) {
-        currentStateID = fail(currentStateID)
-      } else {
-        currentStateID = gotoOutput
-        val currentStateOpt: Option[State] = states.get(currentStateID)
-        currentStateOpt match {
-          case Some(currentState) => if (currentState.endState) {
-           Output =  Output :+ (charPos, currentState.keyword.get)
+        if (gotoOutput == -1) {
+          currentStateID = fail(currentStateID)
+        } else {
+          currentStateID = gotoOutput
+          val currentStateOpt: Option[State] = states.get(currentStateID)
+          currentStateOpt match {
+            case Some(currentState) => if (currentState.endState) {
+              Output = Output :+ (charPos, currentState.keyword.get)
 
 
-          } // Reassign Output with the new list
-          case None => throw Exception(s"This State ID: $currentStateID does not exist!")
+            } // Reassign Output with the new list
+            case None => throw Exception(s"This State ID: $currentStateID does not exist!")
+
+          }
 
         }
-
       }
     }
-    Output
+      Output
+    
 
   /**
    * GoTo Function performs the action of taking an input and moving in the finite state machine
