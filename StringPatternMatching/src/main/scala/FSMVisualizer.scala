@@ -29,7 +29,7 @@ object FSMVisualizer {
     })
   }
 
-  def renderFSM(states: Map[Int, State]): Unit = {
+  private def renderFSM(states: Map[Int, State]): Unit = {
     val graphContainer = document.getElementById("fsm-graph")
 
     // Clear the container before rendering the FSM
