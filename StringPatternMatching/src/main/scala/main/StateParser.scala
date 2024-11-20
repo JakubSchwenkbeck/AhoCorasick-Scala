@@ -1,3 +1,5 @@
+package main
+
 
 
 val ahoCorasickGraph: Map[Int, State] = Map(

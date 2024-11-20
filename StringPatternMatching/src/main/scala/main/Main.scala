@@ -1,3 +1,5 @@
+package main
+
 
 /**
  * The entry point for the Finite State Machine (FSM) demonstration.

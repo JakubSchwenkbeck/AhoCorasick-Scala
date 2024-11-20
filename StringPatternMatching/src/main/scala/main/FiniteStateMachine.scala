@@ -1,16 +1,9 @@
+package main
 
-/**
- * Case class to store a State in the machine  /  (node) in the graph
- *
- * @param ID Unique ID / Labeling of the State in the machine / Node in the Graph / Trie
- * @param Successor Map of Inputs to the ID of the corresponding Successor State
- * @param endState Boolean which determines end states
- * @param keyword Option, if end state then the Keyword it represents is stored
- */
+
+import concurrent.concurrent_computeFail
+
 case class State(ID: Integer, Successor: Map[String, Int], endState: Boolean, keyword: Option[String] = None) // all states have an own ID and a single successor which is mapped by its input, also known by its ID
-
-
-
 
 
 /**
