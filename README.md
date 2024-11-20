@@ -16,6 +16,7 @@ I chose **Scala** for this implementation due to its powerful combination of **f
   - **GUI Integration**: Intuitive graphical representation of the trie and live demonstration of pattern matching.
   - **Concurrency**: Utilizing Scala's concurrency features (e.g., Futures, Akka) to improve performance for large-scale input.
 
+  Checkout the different branches to follow the progress of each new feature!
 ---
 
 ## **Why Aho-Corasick?**
