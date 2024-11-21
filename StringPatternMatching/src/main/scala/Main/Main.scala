@@ -1,4 +1,6 @@
+package Main
 
+import IO.*
 /**
  * The entry point for the Finite State Machine (FSM) demonstration.
  *
@@ -10,20 +12,9 @@
  */
 @main
 def main() : Unit =
-  // input for the machine:
-  val TEST_SearchString: String = "Scala is a functionally programming language that is powerful, concise, and expressive. Many developers enjoy using Scala because of its support for both object-oriented and functional paradigms."
-  val TEST_Keywords: List[String] = List("Scala", "functional", "language", "powerful", "object-oriented", "paradigms", "developers", "support")
+  runCLI()
 
 
-  // create an object of the FinitStateMachine:
-  val FSM = FiniteStateMachine(TEST_SearchString,TEST_Keywords)
-
-  // print some information :
-
-
-  // print(s"${FSM.PMM()}" + "\n")
-  prettyprint(FSM.PMM(),TEST_SearchString)
-  //printGraph(buildGraph(TEST_Keywords))
 
 
 
@@ -78,3 +69,5 @@ def prettyprint(ls : List[(Int, String)], fulltext : String) : Unit =
       println(ls)
     }
   }
+
+
