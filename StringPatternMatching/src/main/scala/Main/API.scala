@@ -1,6 +1,8 @@
 package Main
 import IO.*
-
+import java.nio.file.{Paths, Files}
+import scala.io.Source
+import java.nio.file.StandardOpenOption._
 def searchString(str : String, ls : List[String]): Unit = prettyprint(FiniteStateMachine(str,ls).PMM(),str)
 
 
@@ -13,10 +15,14 @@ def example() : Unit =
   prettyprint(FSM.PMM(), TEST_SearchString)
 
 
-def searchFile(SearchText : String,Keywords : String, output: String): Unit =
-  val str = readFile_String(SearchText)
-  val ls = readFile_List(Keywords)
+def searchFile(inputFile : String,keywordsFile : String, outputFile: String): Unit =
+  val inputPath = Paths.get(inputFile).toAbsolutePath
+  val keywordsPath = Paths.get(keywordsFile).toAbsolutePath
+  val outputPath = Paths.get(outputFile).toAbsolutePath
+
+  val str = readFile_String(inputPath.toString)
+  val ls = readFile_List(keywordsPath.toString)
 
   val res = FiniteStateMachine(str,ls).PMM()
   
-  writeToFile(output,highlightSubstrings(str,res))
+  writeToFile(outputPath.toString,highlightSubstrings(str,res))
