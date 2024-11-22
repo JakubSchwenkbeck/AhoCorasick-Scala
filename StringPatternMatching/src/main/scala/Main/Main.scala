@@ -12,6 +12,7 @@ import IO.*
  */
 @main
 def main() : Unit =
+  searchFile("/files/search.txt", "/files/keywords.txt","/files/output.txt")
   runCLI()
 
 
