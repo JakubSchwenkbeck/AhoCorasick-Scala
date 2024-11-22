@@ -9,6 +9,8 @@ import scala.io.StdIn
 def runCLI(): Unit = {
   println("Welcome to the Aho-Corasick CLI!")
   println("Type `help` for a list of commands or `exit` to quit.")
+  println("Quick Start : type `example` for an example of the algorithm")
+
 
   var running = true
   while (running) {
