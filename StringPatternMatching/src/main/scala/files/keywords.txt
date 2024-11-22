@@ -1,0 +1,1 @@
+Scala, programming, functional programming, JVM, Java, object-oriented, type system, concurrency, parallel programming, big data, Apache Spark, web development, machine learning, DSL, Akka, Play framework, type inference, immutability, multi-core processors, standard library, distributed systems
