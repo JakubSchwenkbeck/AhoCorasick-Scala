@@ -25,4 +25,4 @@ def searchFile(inputFile : String,keywordsFile : String, outputFile: String): Un
 
   val res = FiniteStateMachine(str,ls).PMM()
   
-  writeToFile(outputPath.toString,highlightSubstrings(str,res))
+  writeToFile(outputPath.toString,str + res)
