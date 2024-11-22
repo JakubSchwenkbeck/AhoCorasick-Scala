@@ -48,13 +48,20 @@ def runCLI(): Unit = {
           println("Error: Missing file paths. Usage: search file [input_file] [output_file]")
         }
 
-      case command if command.startsWith("search") =>
-        // Improved regex to capture the string inside quotes and the rest of the input as substrings
-        val pattern = "\"([^\"]+)\"\\s*(.*)".r
-        command match {
+      case command if command.trim.startsWith("search") =>
+        // Enhanced regex: Match optional quoted string and optional trailing substrings
+        val pattern = """(?i)search\s+\"([^\"]*)\"(?:\s+(.*))?""".r
+
+        command.trim match {
           case pattern(mainString, substrings) =>
-            val mainStr = mainString.trim
-            val substringsList = substrings.trim.split("\\s+").toList
+            val mainStr = Option(mainString).map(_.trim).getOrElse("")
+            val substringsList = Option(substrings)
+              .map(_.trim.split("\\s+").filter(_.nonEmpty).toList)
+              .getOrElse(Nil)
+
+            println(s"Main String: $mainStr")
+            println(s"Substrings List: $substringsList")
+
             if (mainStr.nonEmpty && substringsList.nonEmpty) {
               searchString(mainStr, substringsList)
             } else {
@@ -64,6 +71,7 @@ def runCLI(): Unit = {
             println("Error: Invalid syntax. Usage: search [\"string\"] [substring1 substring2 ...]")
         }
       case "" => // Do nothing on empty input
+
 
       case unknown =>
         println(s"Unknown command: $unknown")
