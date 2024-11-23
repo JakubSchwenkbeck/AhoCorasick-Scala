@@ -1,6 +1,6 @@
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
-
+import Main.FiniteStateMachine
 class FiniteStateMachineTest extends AnyFlatSpec with Matchers {
 
   "FiniteStateMachine" should "find all matching keywords in the text" in {

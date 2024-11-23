@@ -1,3 +1,5 @@
+package Main
+
 
 /**
  * Case class to store a State in the machine  /  (node) in the graph

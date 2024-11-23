@@ -48,13 +48,13 @@ This project represents a deep dive into:
    ```bash
    git clone https://github.com/JakubSchwenkbeck/AhoCorsick-Scala.git
    cd StringPatternMatching
-  
+    ```
 2. Run (and compile) the project:
-  ```bash
-  sbt run 
-  ```
+    ```bash
+    sbt run 
+    ```
 
----
+
 
 ## **Open Issues**
 1. **GUI Integration**:
