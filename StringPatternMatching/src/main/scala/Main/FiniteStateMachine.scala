@@ -24,7 +24,7 @@ case class State(ID: Integer, Successor: Map[String, Int], endState: Boolean, ke
 
 class FiniteStateMachine(SearchText: String, Keywords: List[String]) {
 
-  private val states: Map[Int, State] = buildGraph(Keywords) // This map represents the finite state machine
+  private val states: Map[Int, State] = buildTrie(Keywords) // This map represents the finite state machine
   private val text: String = SearchText
   private var keywords: List[String] = Keywords
   private val fails : Map[Int,Int] = computeFail(states)

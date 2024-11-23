@@ -17,7 +17,7 @@ val ahoCorasickGraph: Map[Int, State] = Map(
 )
 
 
-def buildGraph(keywords: List[String]): Map[Int, State] = {
+def buildTrie(keywords: List[String]): Map[Int, State] = {
   var nextID = 0
   var states = Map[Int, State](nextID -> State(nextID, Map(), endState = false)) // Root state
 
