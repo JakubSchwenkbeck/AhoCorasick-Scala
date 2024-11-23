@@ -11,7 +11,7 @@ def example() : Unit =
   val TEST_Keywords: List[String] = List("Scala", "functional", "language", "powerful", "object-oriented", "paradigms", "developers", "support")
   
   val FSM = FiniteStateMachine(TEST_SearchString, TEST_Keywords)
-
+  println("given a text about the Scala programming language, we want to filter some keywords from the String:")
   prettyprint(FSM.PMM(), TEST_SearchString)
 
 
