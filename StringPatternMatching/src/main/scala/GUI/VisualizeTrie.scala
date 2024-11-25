@@ -6,20 +6,9 @@ import processing.core.PApplet.*
 
 import processing.core.PConstants.*
 
-class VisualizeTrie(trie: Map[Int, State]) extends PApplet {
+class VisualizeTrie(trie: Map[Int, State],parent : PApplet) {
   // Processing Settings
-  override def settings(): Unit = {
-    size(1200, 1000) // Window size
-  }
-
-  override def setup(): Unit = {
-    background(240) // Light gray background
-    noLoop() // Static image
-  }
-
-  override def draw(): Unit = {
-    visTrie()
-  }
+ 
 
   // Fields of the class:
   private val Trie: Map[Int, State] = trie
@@ -34,12 +23,12 @@ class VisualizeTrie(trie: Map[Int, State]) extends PApplet {
   private val siblingIndex = scala.collection.mutable.Map[Int, Int]().withDefaultValue(0)
 
   // Main handler function
-  private def visTrie(): Unit = {
+  def visTrie(): Unit = {
     // Draw the root state and recursively visualize the trie
-    drawState(root, 100, height / 4) // Start drawing from the left side, center vertically
+    drawState(root, 100, parent.height / 4) // Start drawing from the left side, center vertically
     if (root.Successor.nonEmpty) {
       for ((input, childID) <- root.Successor) {
-        recTrie(Trie(childID), input, 100, height / 4, 1) // Start recursion with level = 1
+        recTrie(Trie(childID), input, 100, parent.height / 4, 1) // Start recursion with level = 1
       }
     }
   }
@@ -74,45 +63,45 @@ class VisualizeTrie(trie: Map[Int, State]) extends PApplet {
 
     // Draw the circle representing the state
     if (st.endState) {
-      fill(255, 153, 153) // Soft red for end states
-      stroke(204, 0, 0) // Bold outline for end states
-      strokeWeight(2)
+      parent.fill(255, 153, 153) // Soft red for end states
+      parent.stroke(204, 0, 0) // Bold outline for end states
+      parent.strokeWeight(2)
     } else {
-      fill(173, 216, 230) // Soft blue for regular states
-      stroke(0, 102, 204) // Blue outline
-      strokeWeight(1)
+      parent.fill(173, 216, 230) // Soft blue for regular states
+      parent.stroke(0, 102, 204) // Blue outline
+      parent.strokeWeight(1)
     }
-    ellipse(xpos, ypos, circleR, circleR)
+    parent.ellipse(xpos, ypos, circleR, circleR)
 
     // Draw the state's ID inside the circle
-    fill(0) // Black text
-    textAlign(CENTER, CENTER)
-    textSize(14)
-    text(ID.toString, xpos, ypos)
+    parent.fill(0) // Black text
+    parent.textAlign(CENTER, CENTER)
+    parent.textSize(14)
+    parent.text(ID.toString, xpos, ypos)
 
     // Draw the keyword next to end states
     if (st.endState && st.keyword.isDefined) {
-      textSize(12)
-      fill(0)
-      text(st.keyword.get, xpos + circleR / 2 + 20, ypos)
+      parent.textSize(12)
+      parent.fill(0)
+      parent.text(st.keyword.get, xpos + circleR / 2 + 20, ypos)
     }
   }
 
   // Draw a curved connection using arcs and smooth transitions
   private def drawCurvedConnection(x1: Int, y1: Int, x2: Int, y2: Int, label: String): Unit = {
-    noFill()
-    stroke(0)
-    strokeWeight(1)
+    parent.noFill()
+    parent.stroke(0)
+    parent.strokeWeight(1)
 
     // Calculate control points for a smooth arc
     val controlX = (x1 + x2) / 2 // Midpoint on the x-axis
     val controlY = if (y1 < y2) y1 - 40 else y2 - 40 // Offset the arc upwards
 
     // Draw the arc-like curve
-    beginShape()
-    vertex(x1 + circleR / 2, y1) // Start point (adjusted for the circle's radius)
-    quadraticVertex(controlX, controlY, x2 - circleR / 2, y2) // Control point for smooth curve
-    endShape()
+    parent.beginShape()
+    parent.vertex(x1 + circleR / 2, y1) // Start point (adjusted for the circle's radius)
+    parent.quadraticVertex(controlX, controlY, x2 - circleR / 2, y2) // Control point for smooth curve
+    parent.endShape()
 
     // Add an arrowhead for direction
     drawArrowhead(x2 - circleR / 2, y2, atan2(y2 - controlY, x2 - controlX))
@@ -122,28 +111,28 @@ class VisualizeTrie(trie: Map[Int, State]) extends PApplet {
     val midY = (y1 + y2) / 2
 
     // Draw the label slightly above the curve
-    fill(0)
-    textAlign(CENTER, CENTER)
-    textSize(12)
-    text(label, midX, midY - 20)
+    parent.fill(0)
+    parent.textAlign(CENTER, CENTER)
+    parent.textSize(12)
+    parent.text(label, midX, midY - 20)
   }
 
   // Helper function to draw an arrowhead at the end of the curve
   private def drawArrowhead(x: Float, y: Float, angle: Float): Unit = {
-    pushMatrix()
-    translate(x, y)
-    rotate(angle)
+    parent.pushMatrix()
+    parent.translate(x, y)
+    parent.rotate(angle)
 
     // Draw arrowhead triangle
-    fill(0)
-    noStroke()
-    beginShape()
-    vertex(0, 0)
-    vertex(-10, 5)
-    vertex(-10, -5)
-    endShape(CLOSE)
+    parent.fill(0)
+    parent.noStroke()
+    parent.beginShape()
+    parent.vertex(0, 0)
+    parent.vertex(-10, 5)
+    parent.vertex(-10, -5)
+    parent.endShape(CLOSE)
 
-    popMatrix()
+    parent.popMatrix()
   }
 
 }
