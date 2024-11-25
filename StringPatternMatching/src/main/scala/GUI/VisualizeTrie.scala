@@ -3,12 +3,18 @@ package GUI
 import Main.State
 import processing.core.PApplet
 import processing.core.PApplet.*
-
 import processing.core.PConstants.*
+import GUI.DrawingUtils._
 
-class VisualizeTrie(trie: Map[Int, State],parent : PApplet) {
+
+/**
+ * A visualization class for rendering a trie data structure using Processing.
+ *
+ * @param trie   A map representing the trie, where keys are state IDs and values are `State` objects.
+ * @param parent The Processing `PApplet` instance used for rendering.
+ */
+class VisualizeTrie(trie: Map[Int, State], parent: PApplet) {
   // Processing Settings
- 
 
   // Fields of the class:
   private val Trie: Map[Int, State] = trie
@@ -16,13 +22,15 @@ class VisualizeTrie(trie: Map[Int, State],parent : PApplet) {
   private val statePositions = scala.collection.mutable.Map[Int, (Int, Int)]() // Store positions of states
   private val xOffset = 150 // Horizontal spacing between levels
   private val yOffset = 120 // Vertical spacing between siblings
-
   private val circleR = 40 // Circle radius
 
   // To track sibling positions at each level
   private val siblingIndex = scala.collection.mutable.Map[Int, Int]().withDefaultValue(0)
 
-  // Main handler function
+  /**
+   * Main method to visualize the entire trie structure.
+   * Starts drawing from the root and recursively renders all connected states.
+   */
   def visTrie(): Unit = {
     // Draw the root state and recursively visualize the trie
     drawState(root, 100, parent.height / 4) // Start drawing from the left side, center vertically
@@ -33,7 +41,15 @@ class VisualizeTrie(trie: Map[Int, State],parent : PApplet) {
     }
   }
 
-  // Recursive function to traverse and draw the trie
+  /**
+   * Recursively visualizes the trie structure starting from a given state.
+   *
+   * @param st       The current state to be drawn.
+   * @param input    The input string that leads to this state.
+   * @param parentX  X-coordinate of the parent state.
+   * @param parentY  Y-coordinate of the parent state.
+   * @param level    The current depth level in the trie.
+   */
   private def recTrie(st: State, input: String, parentX: Int, parentY: Int, level: Int): Unit = {
     if (st != null) {
       val xPos = parentX + xOffset
@@ -55,11 +71,16 @@ class VisualizeTrie(trie: Map[Int, State],parent : PApplet) {
     }
   }
 
-  // Draw a state at the given position
+  /**
+   * Draws a state (node) in the trie at the specified position.
+   *
+   * @param st   The state to be drawn.
+   * @param xpos X-coordinate for the state.
+   * @param ypos Y-coordinate for the state.
+   */
   private def drawState(st: State, xpos: Int, ypos: Int): Unit = {
     val ID = st.ID
     statePositions(ID) = (xpos, ypos) // Save the position of this state
-
 
     // Draw the circle representing the state
     if (st.endState) {
@@ -87,52 +108,29 @@ class VisualizeTrie(trie: Map[Int, State],parent : PApplet) {
     }
   }
 
-  // Draw a curved connection using arcs and smooth transitions
+  /**
+   * Draws a curved connection between two states with an arrowhead and a label.
+   *
+   * @param x1    X-coordinate of the starting state.
+   * @param y1    Y-coordinate of the starting state.
+   * @param x2    X-coordinate of the ending state.
+   * @param y2    Y-coordinate of the ending state.
+   * @param label The label to display on the connection (usually the input string).
+   */
   private def drawCurvedConnection(x1: Int, y1: Int, x2: Int, y2: Int, label: String): Unit = {
-    parent.noFill()
-    parent.stroke(0)
-    parent.strokeWeight(1)
-
-    // Calculate control points for a smooth arc
-    val controlX = (x1 + x2) / 2 // Midpoint on the x-axis
-    val controlY = if (y1 < y2) y1 - 40 else y2 - 40 // Offset the arc upwards
-
-    // Draw the arc-like curve
-    parent.beginShape()
-    parent.vertex(x1 + circleR / 2, y1) // Start point (adjusted for the circle's radius)
-    parent.quadraticVertex(controlX, controlY, x2 - circleR / 2, y2) // Control point for smooth curve
-    parent.endShape()
-
-    // Add an arrowhead for direction
-    drawArrowhead(x2 - circleR / 2, y2, atan2(y2 - controlY, x2 - controlX))
-
-    // Calculate the midpoint for the label
-    val midX = (x1 + x2) / 2
-    val midY = (y1 + y2) / 2
-
-    // Draw the label slightly above the curve
-    parent.fill(0)
-    parent.textAlign(CENTER, CENTER)
-    parent.textSize(12)
-    parent.text(label, midX, midY - 20)
+    DrawingUtils.drawCurvedConnection(parent, x1, y1, x2, y2, label, circleR)
   }
 
-  // Helper function to draw an arrowhead at the end of the curve
+
+  /**
+   * Draws an arrowhead at the end of a curved connection to indicate direction.
+   *
+   * @param x     X-coordinate of the arrowhead tip.
+   * @param y     Y-coordinate of the arrowhead tip.
+   * @param angle The angle of rotation for the arrowhead.
+   */
   private def drawArrowhead(x: Float, y: Float, angle: Float): Unit = {
-    parent.pushMatrix()
-    parent.translate(x, y)
-    parent.rotate(angle)
-
-    // Draw arrowhead triangle
-    parent.fill(0)
-    parent.noStroke()
-    parent.beginShape()
-    parent.vertex(0, 0)
-    parent.vertex(-10, 5)
-    parent.vertex(-10, -5)
-    parent.endShape(CLOSE)
-
-    parent.popMatrix()
+    DrawingUtils.drawArrowhead(parent, x, y, angle)
   }
 
 }
