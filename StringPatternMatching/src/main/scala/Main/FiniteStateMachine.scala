@@ -26,7 +26,7 @@ class FiniteStateMachine(SearchText: String, Keywords: List[String]) {
 
   private val states: Map[Int, State] = buildTrie(Keywords) // This map represents the finite state machine
   private val text: String = SearchText
-  private var keywords: List[String] = Keywords
+  private val keywords: List[String] = Keywords
   private val fails : Map[Int,Int] = computeFail(states)
 
   private var currentStateID: Int = 0 // starting State is by default 0 !
