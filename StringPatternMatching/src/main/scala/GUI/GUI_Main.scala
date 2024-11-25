@@ -3,15 +3,17 @@ import processing.core.PApplet
 import Main.*
 object Gui_Main extends PApplet {
   def main(args: Array[String]): Unit = {
-    val sketch = new MySketch()
+
     val keywords = List("hers", "she", "his")
-    
+
     val Vis = VisualizeTrie(buildTrie(keywords))
     PApplet.runSketch(Array("VisualizeTrie"),Vis)
-   // PApplet.runSketch(Array("MySketch"), sketch)
   }
 }
 
+
+
+/*
 class MySketch extends PApplet {
   var currentFunction: () => Unit = drawDefault // Reference to the current drawing function
 
@@ -61,4 +63,6 @@ class MySketch extends PApplet {
       ellipse(random(width), random(height), 50, 50) // Random circles
     }
   }
+
 }
+*/
