@@ -19,7 +19,7 @@ def main() : Unit =
 
 
 
-// TODO Pretty print fails when a failstate is successfully found!
+
 /**
  * Pretty-Print function for the result of the StringPatternMatching, prints the string with highlighted keywords
  *
