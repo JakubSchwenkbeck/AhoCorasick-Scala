@@ -22,8 +22,8 @@ class VisualizeTrie(trie: Map[Int, State]) extends PApplet {
   private val Trie: Map[Int, State] = trie
   private val root: State = Trie(0) // Assume the root state is ID 0
   private val statePositions = scala.collection.mutable.Map[Int, (Int, Int)]() // Store positions of states
-  private val xOffset = 200 // Horizontal spacing between siblings
-  private val yOffset = 100 // Vertical spacing between levels
+  private val xOffset = 100 // Horizontal spacing between levels
+  private val yOffset = 100 // Vertical spacing between siblings
 
   private val circleR = 30 // Circle radius
 
@@ -33,10 +33,10 @@ class VisualizeTrie(trie: Map[Int, State]) extends PApplet {
   // Main handler function
   private def visTrie(): Unit = {
     // Draw the root state and recursively visualize the trie
-    drawState(root, width / 2, 50) // Center the root at the top
+    drawState(root, 50, height / 4) // Start drawing from the left side, center vertically
     if (root.Successor.nonEmpty) {
       for ((input, childID) <- root.Successor) {
-        recTrie(Trie(childID), input, width / 2, 50, 1) // Start recursion with level = 1
+        recTrie(Trie(childID), input, 50, height / 4, 1) // Start recursion with level = 1
       }
     }
     println(statePositions)
@@ -48,14 +48,26 @@ class VisualizeTrie(trie: Map[Int, State]) extends PApplet {
     if (st != null) {
       // Determine the number of children at the current level (siblings)
       val numChildren = st.Successor.size
-      val siblingCount = siblingIndex(level)
 
-      // Calculate the horizontal position based on the number of siblings
-      val xPos = parentX + (siblingCount - (numChildren - 1) / 2) * xOffset // Center the nodes horizontally
-      val yPos = parentY + yOffset // Vertical position based on level
+      // If it's the first child, place it directly to the right of the parent (no vertical offset)
+      val xPos = parentX + xOffset
+      // Determine the vertical position: If this is an end state, don't offset vertically
+      var yPos = parentY
+      if (statePositions.values.exists(_ == (xPos,parentY)) || !st.Successor.isEmpty){
+        
+        yPos = parentY + siblingIndex(level) * yOffset
+        siblingIndex(level) += 1
+      }
+
+      
 
       // Update the sibling index for this level
-      siblingIndex(level) += 1
+
+      println("ID " +st.ID)
+      println("level " +level)
+      println("siblingindex " +siblingIndex(level)+ "\n")
+
+     
 
       // Draw the current state
       drawState(st, xPos, yPos)
@@ -79,6 +91,13 @@ class VisualizeTrie(trie: Map[Int, State]) extends PApplet {
 
     // Draw the circle representing the state
     if (st.endState) {
+      fill(0)
+      // write the keyword next to the state
+      textAlign(processing.core.PConstants.CENTER, processing.core.PConstants.CENTER)
+      textSize(12)
+      text(st.keyword.get, circleR + xpos,  circleR + ypos)
+
+
       fill(150) // Gray for end states
     } else {
       fill(255) // White for regular states
@@ -91,12 +110,16 @@ class VisualizeTrie(trie: Map[Int, State]) extends PApplet {
     textSize(12)
     text(ID.toString, xpos, ypos)
     println(st.ID)
+
+
+
+
   }
 
   // Draw a connection between two states
   private def drawConnection(x1: Int, y1: Int, x2: Int, y2: Int, label: String): Unit = {
     stroke(0) // Black lines
-    line(x1, y1 + circleR / 2, x2, y2 - circleR / 2) // Draw the line
+    line(x1 + circleR / 2, y1, x2 - circleR / 2, y2) // Draw the line
 
     // Calculate the midpoint of the line
     val midX = (x1 + x2) / 2
@@ -105,6 +128,6 @@ class VisualizeTrie(trie: Map[Int, State]) extends PApplet {
     // Draw the label at the midpoint of the line
     fill(0) // Text color
     textAlign(processing.core.PConstants.CENTER, processing.core.PConstants.CENTER) // Center the text
-    text(label, midX + 10, midY - 25) // Draw the label slightly above the line
+    text(label, midX, midY - 25) // Draw the label slightly above the line
   }
 }
