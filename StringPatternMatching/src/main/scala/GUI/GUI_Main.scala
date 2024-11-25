@@ -9,6 +9,7 @@ object Gui_Main extends PApplet {
     val Vis = VisualizeTrie(buildTrie(keywords))
     PApplet.runSketch(Array("VisualizeTrie"),Vis)
   }
+  
 }
 
 
