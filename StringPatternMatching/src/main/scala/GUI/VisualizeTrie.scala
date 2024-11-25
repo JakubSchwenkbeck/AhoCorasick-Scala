@@ -17,8 +17,8 @@ class VisualizeTrie(trie: Map[Int,State]) extends  PApplet  {
   }
   private val Trie : Map[Int, State] = trie
   private val first: State = Trie(0)
-  var x = 0
-  var y = 0
+  private var x = 40
+  private var y = 40
 
   def visTrie(): Unit=
 
@@ -35,6 +35,7 @@ class VisualizeTrie(trie: Map[Int,State]) extends  PApplet  {
 
       }
     }
+    println(Trie)
   private def recTrie(st : State) : Unit =
     // draw s, rec on Successors
     if (st != null) {
@@ -57,9 +58,18 @@ class VisualizeTrie(trie: Map[Int,State]) extends  PApplet  {
   private def drawState(st: State, xpos : Int, ypos :Int): Unit ={
 
       val ID = st.ID
+      if(st.endState){
+        fill(150)
+      }else {
+        fill(255)
+      }
       ellipse(xpos, ypos,30,30)
 
-      text(ID.toString,xpos,ypos)
+      // Set text alignment to center
+      fill(0) // Text color
+      textAlign(xpos, ypos)
+      textSize(12) // Optional: Adjust text size if needed
+      text(ID.toString, xpos, ypos) // Draw text at the center of the ellipse
       x += 50
       y += 50
   }
