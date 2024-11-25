@@ -1,32 +1,27 @@
-package concurrent
+package main
 
-import scala.concurrent._
-import ExecutionContext.Implicits.global
-import scala.collection.mutable
 import scala.collection.concurrent.TrieMap
-import scala.concurrent.duration._
+import scala.collection.mutable
+import scala.collection.parallel.CollectionConverters._
 
-import main.State
-
-def concurrent_computeFail(states: Map[Int, State]): Map[Int, Int] = {
-  // Use an immutable map for fail and a thread-safe structure for updates
+def con_computeFail(states: Map[Int, State]): Map[Int, Int] = {
+  // Initialize fail function, setting all states to fail to root (state 0)
   val fail = TrieMap[Int, Int]().withDefaultValue(0)
-  val queue = mutable.Queue[Int]()
+  val queue = mutable.Queue[Int]() // Using queue as suggested in the Aho-Corasick paper
 
   // Set failure links for root's direct successors
   for ((input, stateID) <- states(0).Successor) {
-    fail += stateID -> 0 // direct successors of root point back to root!
+    fail += stateID -> 0 // Direct successors of root point back to root!
     queue.enqueue(stateID)
   }
 
-  // Define a helper function to process each state
+  // Function to process a single state
   def processState(currentStateID: Int): Unit = {
     val currentState = states(currentStateID)
 
     // For each input and its successor state
     for ((input, successorID) <- currentState.Successor) {
-      // Enqueue successor
-      queue.enqueue(successorID)
+      queue.synchronized { queue.enqueue(successorID) }
 
       // Find the fail link for the current state
       var fallbackID = fail(currentStateID)
@@ -36,23 +31,19 @@ def concurrent_computeFail(states: Map[Int, State]): Map[Int, Int] = {
 
       // Update the fail link of the successor
       val fallbackSuccessorID = states(fallbackID).Successor.getOrElse(input, 0)
-      fail.put(successorID, fallbackSuccessorID)
+      fail += successorID -> fallbackSuccessorID
     }
   }
 
-  // Start BFS and process successors concurrently
-  val futures = mutable.ListBuffer[Future[Unit]]()
-
+  // Process the queue concurrently
   while (queue.nonEmpty) {
-    val currentStateID = queue.dequeue()
-    futures += Future {
-      processState(currentStateID)
+    val tasks = queue.synchronized {
+      val batch = queue.dequeueAll(_ => true) // Fetch all queued states
+      batch
     }
+
+    tasks.par.foreach(processState) // Process the batch in parallel
   }
 
-  // Wait for all futures to complete
-  Await.result(Future.sequence(futures), Duration.Inf)
-
-  // Convert the fail map to immutable and return
-  fail.toMap
+  fail.toMap // Convert TrieMap to regular Map for final result
 }
