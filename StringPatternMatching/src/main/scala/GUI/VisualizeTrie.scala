@@ -1,86 +1,98 @@
 package GUI
+
 import Main.State
 import processing.core.PApplet
 
-class VisualizeTrie(trie: Map[Int,State]) extends  PApplet  {
+class VisualizeTrie(trie: Map[Int, State]) extends PApplet {
   // Processing Settings:
   override def settings(): Unit = {
-    size(1200, 1000) // Windowsize
+    size(1200, 1000) // Window size
   }
 
   override def setup(): Unit = {
-    background(255) // white backgorund
-    noLoop() // not looping, as picture is static
+    background(255) // White background
+    noLoop() // Static image
   }
 
   override def draw(): Unit = {
     visTrie()
   }
 
-  // fields of class:
-  private val Trie : Map[Int, State] = trie
-  private val first: State = Trie(0)
-  private var x = 40
-  private var y = 40
+  // Fields of the class:
+  private val Trie: Map[Int, State] = trie
+  private val root: State = Trie(0) // Assume the root state is ID 0
+  private val statePositions = scala.collection.mutable.Map[Int, (Int, Int)]() // Store positions of states
+  private val xOffset = 200 // Horizontal spacing between states
+  private val yOffset = 100 // Vertical spacing between levels
 
-
-  // main handler function which calls helper functions
-  private def visTrie(): Unit=
-
-      // Draw first trie as circle!
-
-    drawState(first,x,y) // init State
-
-    if (first.Successor.nonEmpty) {
-      for (elem <- first.Successor) {
-        // for each State in our trie,
-        // Draw the State and recurse on its successors
-        recTrie(Trie(elem._2))
-
+  // Main handler function
+  private def visTrie(): Unit = {
+    // Draw the root state and recursively visualize the trie
+    drawState(root, width / 2, 50) // Center the root at the top
+    if (root.Successor.nonEmpty) {
+      for ((input, childID) <- root.Successor) {
+        recTrie(Trie(childID),input, width / 2, 50, 1) // Start recursion with level = 1
       }
     }
-    println(Trie)
+    println(statePositions)
+  }
 
-    // recursive function to make a BFS like rec on the Trie and draw all states accordingly
-  private def recTrie(st : State) : Unit =
-    // draw s, rec on Successors
+
+  // Recursive function to traverse and draw the trie
+  private def recTrie(st: State,input: String ,parentX: Int, parentY: Int, level: Int): Unit = {
     if (st != null) {
-      val succ = st.Successor
-      try {
-        drawState(st, x, y)
-      }catch {
-        case e : NullPointerException =>
-          println(st)
-          println("x : "+x + "   y : " + y)
-      }
+      val xPos = parentX + (xOffset / Math.pow(2, level).toInt) // Dynamic horizontal position
+      val yPos = parentY + yOffset // Vertical position based on level
 
-      if (succ.nonEmpty) {
-        for (elem <- succ) {
-          recTrie(Trie(elem._2))
+      // Draw the current state
+      drawState(st, xPos, yPos)
+
+      // Draw a line connecting the current state to its parent
+      drawConnection(parentX, parentY, xPos, yPos,input)
+
+      // Recurse on successors
+      if (st.Successor.nonEmpty) {
+        for ((input, childID) <- st.Successor) {
+          recTrie(Trie(childID),input, xPos, yPos, level + 1)
         }
       }
     }
-
-
-  // drawing function for a state at given pos
-  private def drawState(st: State, xpos : Int, ypos :Int): Unit ={
-
-      val ID = st.ID
-      if(st.endState){
-        fill(150)
-      }else {
-        fill(255)
-      }
-      ellipse(xpos, ypos,30,30)
-
-      // Set text alignment to center
-      fill(0) // Text color
-      textAlign(xpos, ypos)
-      textSize(12) // Optional: Adjust text size if needed
-      text(ID.toString, xpos, ypos) // Draw text at the center of the ellipse
-      x += 50
-      y += 50
   }
+
+  // Draw a state at the given position
+  private def drawState(st: State, xpos: Int, ypos: Int): Unit = {
+    val ID = st.ID
+    statePositions(ID) = (xpos, ypos) // Save the position of this state
+
+    // Draw the circle representing the state
+    if (st.endState) {
+      fill(150) // Gray for end states
+    } else {
+      fill(255) // White for regular states
+    }
+    ellipse(xpos, ypos, 30, 30)
+
+    // Draw the state's ID inside the circle
+    fill(0) // Black text
+    textAlign(processing.core.PConstants.CENTER, processing.core.PConstants.CENTER)
+    textSize(12)
+    text(ID.toString, xpos, ypos)
+    println(st.ID)
+  }
+
+  // Draw a connection between two states
+  private def drawConnection(x1: Int, y1: Int, x2: Int, y2: Int, label: String): Unit = {
+    stroke(0) // Black lines
+    line(x1, y1, x2, y2) // Draw the line
+
+    // Calculate the midpoint of the line
+    val midX = (x1 + x2) / 2
+    val midY = (y1 + y2) / 2
+
+    // Draw the label at the midpoint of the line
+    fill(0) // Text color
+    textAlign(processing.core.PConstants.CENTER, processing.core.PConstants.CENTER) // Center the text
+    text(label, midX + 10, midY -25) // Draw the label slightly above the line
+  }
+
 }
-
-
