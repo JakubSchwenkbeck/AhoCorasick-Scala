@@ -19,14 +19,20 @@ class VisualizeTrie(trie: Map[Int, State], parent: PApplet) {
   // Fields of the class:
   private val Trie: Map[Int, State] = trie
   private val root: State = Trie(0) // Assume the root state is ID 0
-  private val statePositions = scala.collection.mutable.Map[Int, (Int, Int)]() // Store positions of states
+  var statePositions = scala.collection.mutable.Map[Int, (Int, Int)]() // Store positions of states
   private val xOffset = 150 // Horizontal spacing between levels
   private val yOffset = 120 // Vertical spacing between siblings
   private val circleR = 40 // Circle radius
-
+  
+  
   // To track sibling positions at each level
-  private val siblingIndex = scala.collection.mutable.Map[Int, Int]().withDefaultValue(0)
+  private var siblingIndex = scala.collection.mutable.Map[Int, Int]().withDefaultValue(0)
 
+  
+  def resetVis() : Unit =
+    statePositions = scala.collection.mutable.Map[Int, (Int, Int)]()
+    siblingIndex = scala.collection.mutable.Map[Int, Int]().withDefaultValue(0)
+  
   /**
    * Main method to visualize the entire trie structure.
    * Starts drawing from the root and recursively renders all connected states.
@@ -40,7 +46,7 @@ class VisualizeTrie(trie: Map[Int, State], parent: PApplet) {
       }
     }
   }
-
+  
   /**
    * Recursively visualizes the trie structure starting from a given state.
    *
