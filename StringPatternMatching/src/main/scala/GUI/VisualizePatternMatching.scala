@@ -27,7 +27,6 @@ class VisualizePatternMatching(
    * Perform one step of the pattern matching algorithm and visualize it.
    */
   def step(): Unit = {
-    println("Here")
     if (currentCharIndex < text.length - 1) {
       currentCharIndex += 1
       val char = text.charAt(currentCharIndex).toString
@@ -86,12 +85,13 @@ class VisualizePatternMatching(
   private def visualizeStateTransition(fromState: Int, toState: Int, char: String): Unit = {
     val (x1, y1) = statePositions(fromState)
     val (x2, y2) = statePositions(toState)
-    parent.fill(0, 255, 0)
-    parent.stroke(0, 255, 0)
-    parent.line(x1, y1, x2, y2)
-    parent.text(char, (x1 + x2) / 2, (y1 + y2) / 2 - 10)
+    parent.fill(0, 255, 0) // Bright green fill for the transition text
+    parent.stroke(0, 200, 50) // Vivid green stroke for the line
+    parent.strokeWeight(3) // Thicker line
+    parent.line(x1, y1, x2, y2) // Draw the line
+    parent.text(char, (x1 + x2) / 2, (y1 + y2) / 2 - 10) // Draw the character
     parent.noStroke()
-    parent.fill(0)
+    parent.fill(0) // Reset fill color
   }
 
   /**
@@ -101,8 +101,9 @@ class VisualizePatternMatching(
     val (x1, y1) = statePositions(currentStateID)
     val failStateID = fail(currentStateID)
     val (x2, y2) = statePositions(failStateID)
-    parent.stroke(255, 0, 0)
-    parent.line(x1, y1, x2, y2)
+    parent.stroke(255, 0, 0) // Bright red stroke
+    parent.strokeWeight(2) // Thicker line for fail transition
+    parent.line(x1, y1, x2, y2) // Draw the fail link
     parent.noStroke()
   }
 
@@ -112,11 +113,10 @@ class VisualizePatternMatching(
   private def visualizeMatch(index: Int, keyword: String): Unit = {
     val charX = 10 + index * 15
     val charY = parent.height - 40
-    parent.fill(0, 0, 255)
+    parent.fill(0, 0, 255) // Bright blue for matches
     parent.text(s"Match: $keyword", charX, charY)
-    parent.fill(0)
+    parent.fill(0) // Reset fill color
   }
-
   /**
    * Draw the current state of the search text and states.
    */
@@ -126,16 +126,14 @@ class VisualizePatternMatching(
   }
 
 
-
-  private def drawSearchText(): Unit = {
+   def drawSearchText(): Unit = {
     val baseX = 10
     val baseY = parent.height - 20
     for (i <- text.indices) {
-      parent.fill(if (i == currentCharIndex) 255 else 0)
+      parent.fill(if (i == currentCharIndex) 0 else 50) // Bright white for the current character, dim gray for others
       parent.text(text.charAt(i), baseX + i * 15, baseY)
     }
   }
-
   def fail(stateID: Int): Int = { // actual magic happens in computeFail
     fails(stateID) // Return the fail link for the current state
   }

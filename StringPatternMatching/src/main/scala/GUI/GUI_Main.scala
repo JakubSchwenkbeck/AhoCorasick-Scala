@@ -33,6 +33,8 @@ class MainApp extends PApplet {
   private var message = "Output and messages will appear here." // Displays messages to the user
   private var trieVisualizer: VisualizeTrie = _ // Visualizer for the trie
   private val backButtonRect = (100, 400, 150, 40) // Back button location
+  private val stepButtonRect = (400, 600, 150, 40) // Back button location
+  private var VPM : VisualizePatternMatching = _
 
   /**
    * Configures the settings for the Processing sketch, including window size.
@@ -77,8 +79,14 @@ class MainApp extends PApplet {
     } else {
       // Display trie visualization
       trieVisualizer.visTrie()
+      VPM.step()
+      drawButton(stepButtonRect, "Step")
       drawButton(backButtonRect, "Back")
+
+      VPM.drawSearchText()
       noLoop()
+      trieVisualizer.resetVis()
+
     }
   }
 
@@ -138,6 +146,9 @@ class MainApp extends PApplet {
       isTyping = true
     } else if (isInside(mouseX, mouseY, backButtonRect)) {
       goToMainMenu()
+    } else if (isInside(mouseX, mouseY, stepButtonRect)) {
+      VPM.step()
+      redraw()
     } else {
       isTyping = false
     }
@@ -186,6 +197,7 @@ class MainApp extends PApplet {
   private def buildCustomTrie(keywords: List[String]): Unit = {
     message = s"Building trie with custom keywords: ${keywords.mkString(", ")}"
     trieVisualizer = new VisualizeTrie(buildTrie(keywords), this)
+    VPM = new VisualizePatternMatching(buildTrie(keywords),trieVisualizer.statePositions,this,"Sher this re",keywords)
   }
 
   /**
