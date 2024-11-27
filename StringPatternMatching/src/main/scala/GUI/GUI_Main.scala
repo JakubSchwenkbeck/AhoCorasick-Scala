@@ -25,11 +25,11 @@ object Gui_Main extends PApplet {
  * The GUI includes a main menu where users can either run an example or input their own strings to build a trie.
  */
 class MainApp extends PApplet {
-  var inMainMenu = true
+  private var inMainMenu = true
   private val exampleButtonRect = (100, 120, 150, 40) // x, y, width, height for the "Run Example" button
-  private val buildButtonRect = (420, 200, 150, 40) // x, y, width, height for the "Build Trie" button
+  private val buildButtonRect = (420, 120, 150, 40) // x, y, width, height for the "Build Trie" button
   private val backButtonRect = (100, 800, 150, 40) // Back button location
-  private val stepButtonRect = (400, 600, 150, 40) // Step button location
+  private val stepButtonRect = (400, 800, 150, 40) // Step button location
 
   private var inputField = "" // Stores the user input for keywords
   private var searchTextField = "" // Stores the user input for SearchText
@@ -101,7 +101,7 @@ class MainApp extends PApplet {
   }
 
   private def drawInputField(label: String, fieldValue: String, x: Int, y: Int, isActive: Boolean): Unit = {
-    val w = 300
+    val w = 600
     val h = 40
 
     // Label
@@ -170,7 +170,7 @@ class MainApp extends PApplet {
   private def runExampleTrie(): Unit = {
     val keywords = List("hers", "she", "his", "he")
     
-    searchString = "sherishers"
+    searchString = "sher is hers"
     message = s"${keywords.mkString(", ")}"
     trieVisualizer = new VisualizeTrie(buildTrie(keywords), this)
     VPM = new VisualizePatternMatching(buildTrie(keywords), trieVisualizer.statePositions, this, searchString, keywords)
