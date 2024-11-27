@@ -28,7 +28,7 @@ class MainApp extends PApplet {
   var inMainMenu = true
   private val exampleButtonRect = (100, 120, 150, 40) // x, y, width, height for the "Run Example" button
   private val buildButtonRect = (420, 200, 150, 40) // x, y, width, height for the "Build Trie" button
-  private val backButtonRect = (100, 400, 150, 40) // Back button location
+  private val backButtonRect = (100, 800, 150, 40) // Back button location
   private val stepButtonRect = (400, 600, 150, 40) // Step button location
 
   private var inputField = "" // Stores the user input for keywords
@@ -36,6 +36,7 @@ class MainApp extends PApplet {
   private var isTypingInput = false // Tracks typing state for keywords
   private var isTypingSearchText = false // Tracks typing state for SearchText
 
+  private var searchString = ""
   private var message = "Output and messages will appear here." // Displays messages to the user
   private var trieVisualizer: VisualizeTrie = _ // Visualizer for the trie
   private var VPM: VisualizePatternMatching = _
@@ -82,6 +83,8 @@ class MainApp extends PApplet {
       VPM.drawSearchText()
       noLoop()
       trieVisualizer.resetVis()
+
+      drawText()
     }
   }
 
@@ -166,16 +169,18 @@ class MainApp extends PApplet {
 
   private def runExampleTrie(): Unit = {
     val keywords = List("hers", "she", "his", "he")
-    val searchText = "sherishers"
-    message = s"Running example trie with keywords: ${keywords.mkString(", ")} and search text: $searchText"
+    
+    searchString = "sherishers"
+    message = s"${keywords.mkString(", ")}"
     trieVisualizer = new VisualizeTrie(buildTrie(keywords), this)
-    VPM = new VisualizePatternMatching(buildTrie(keywords), trieVisualizer.statePositions, this, searchText, keywords)
+    VPM = new VisualizePatternMatching(buildTrie(keywords), trieVisualizer.statePositions, this, searchString, keywords)
   }
 
   private def buildCustomTrie(keywords: List[String], searchText: String): Unit = {
-    message = s"Building trie with custom keywords: ${keywords.mkString(", ")} and search text: $searchText"
+    message = s"${keywords.mkString(", ")}"
+    searchString = searchText
     trieVisualizer = new VisualizeTrie(buildTrie(keywords), this)
-    VPM = new VisualizePatternMatching(buildTrie(keywords), trieVisualizer.statePositions, this, searchText, keywords)
+    VPM = new VisualizePatternMatching(buildTrie(keywords), trieVisualizer.statePositions, this, searchString, keywords)
   }
 
   private def goToMainMenu(): Unit = {
@@ -183,5 +188,11 @@ class MainApp extends PApplet {
     message = "Output and messages will appear here."
     trieVisualizer = null
     redraw()
+  }
+  private def drawText(): Unit = {
+      fill(0)
+      textSize(18)
+      text("Keywords : " + message, 2 * width/3, height/2)
+      text("SearchString : " + searchString, 2 * width/3, height/2 + 150)
   }
 }
