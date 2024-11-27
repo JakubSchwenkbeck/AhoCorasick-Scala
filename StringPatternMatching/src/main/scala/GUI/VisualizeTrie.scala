@@ -4,7 +4,9 @@ import Main.State
 import processing.core.PApplet
 import processing.core.PApplet.*
 import processing.core.PConstants.*
-import GUI.DrawingUtils._
+import GUI.DrawingUtils.*
+
+import scala.collection.mutable
 
 
 /**
@@ -19,10 +21,17 @@ class VisualizeTrie(trie: Map[Int, State], parent: PApplet) {
   // Fields of the class:
   private val Trie: Map[Int, State] = trie
   private val root: State = Trie(0) // Assume the root state is ID 0
-  var statePositions = scala.collection.mutable.Map[Int, (Int, Int)]() // Store positions of states
-  private val xOffset = 150 // Horizontal spacing between levels
-  private val yOffset = 120 // Vertical spacing between siblings
-  private val circleR = 40 // Circle radius
+  var statePositions: mutable.Map[Int, (Int, Int)] = scala.collection.mutable.Map[Int, (Int, Int)]() // Store positions of states
+  private var xOffset : Int= 150 // Horizontal spacing between levels
+  private var yOffset : Int = 120 // Vertical spacing between siblings
+  private var circleR : Int = 40 // Circle radius
+
+  if(Trie.values.size > 12 && Trie.values.size < 40) {
+    xOffset = max(xOffset - 4 *( Trie.values.size -12) , 35) // Horizontal spacing between levels
+    yOffset = max(yOffset - 9 *( Trie.values .size -12),28)  // Vertical spacing between siblings
+    circleR = max(circleR - 3 *( Trie.values.size -12) ,30) // Circle radius
+  }
+  if(Trie.values.size < 40){parent.text("The input is to big for the GUI, please use th CLI and files", 100,100)}
   
   
   // To track sibling positions at each level
@@ -39,10 +48,10 @@ class VisualizeTrie(trie: Map[Int, State], parent: PApplet) {
    */
   def visTrie(): Unit = {
     // Draw the root state and recursively visualize the trie
-    drawState(root, 100, parent.height / 4) // Start drawing from the left side, center vertically
+    drawState(root, 50, parent.height / 9) // Start drawing from the left side, center vertically
     if (root.Successor.nonEmpty) {
       for ((input, childID) <- root.Successor) {
-        recTrie(Trie(childID), input, 100, parent.height / 4, 1) // Start recursion with level = 1
+        recTrie(Trie(childID), input, 50, parent.height / 9, 1) // Start recursion with level = 1
       }
     }
   }
@@ -59,9 +68,10 @@ class VisualizeTrie(trie: Map[Int, State], parent: PApplet) {
   private def recTrie(st: State, input: String, parentX: Int, parentY: Int, level: Int): Unit = {
     if (st != null) {
       val xPos = parentX + xOffset
-      val yPos = parentY + siblingIndex(level) * yOffset
-      siblingIndex(level) += 1
 
+      var yPos = parentY + siblingIndex(level) * yOffset
+      siblingIndex(level) += 1
+      if(yPos >parent.height){yPos = parentY +  yOffset }
       // Draw the current state
       drawState(st, xPos, yPos)
 

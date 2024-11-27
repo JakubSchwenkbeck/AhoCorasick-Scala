@@ -42,7 +42,7 @@ class VisualizePatternMatching(
         trie.get(currentStateID).foreach { currentState =>
           if (currentState.endState) {
             matches = matches :+ (currentCharIndex + 1, currentState.keyword.get)
-            visualizeMatch(currentCharIndex + 1, currentState.keyword.get)
+            visualizeMatch(currentState.ID, currentState.keyword.get)
           }
         }
       }
@@ -111,9 +111,15 @@ class VisualizePatternMatching(
    * Visualize a match found.
    */
   private def visualizeMatch(index: Int, keyword: String): Unit = {
-    val charX = 10 + index * 15
-    val charY = parent.height - 40
+    println("match found at " + keyword)
+
+    val charX = 600
+    val charY = 500
     parent.fill(0, 0, 255) // Bright blue for matches
+    parent.stroke(0, 102, 204) // Blue outline
+    parent.strokeWeight(1)
+    parent.ellipse(statePositions(index)._1,statePositions(index)._2,40,40)
+    
     parent.text(s"Match: $keyword", charX, charY)
     parent.fill(0) // Reset fill color
   }
