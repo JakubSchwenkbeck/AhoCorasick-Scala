@@ -1,6 +1,6 @@
 package GUI
 
-import GUI.UTILS.DrawingUtils.{drawButton, drawInputField}
+import GUI.UTILS.DrawingUtils.{drawButton, drawEducationalText, drawInputField}
 import processing.core.PApplet
 import processing.core.PConstants.*
 import Main.*
@@ -39,7 +39,7 @@ class MainApp extends PApplet {
 
   // Visualization and Messages
   private var searchString = ""
-  private var message = "Output and messages will appear here."
+  private var message = ""
   private var trieVisualizer: VisualizeTrie = _
   private var VPM: VisualizePatternMatching = _
 
@@ -103,27 +103,11 @@ class MainApp extends PApplet {
     fill(30, 144, 255)
     textAlign(LEFT, TOP)
     textSize(14)
-    val educationalText =
-      """
-        |**Educational Overview**
-        |This tool visualizes the **Aho-Corasick Algorithm**, a method for efficient **multi-pattern string matching**.
-        |Inspired by the seminal [1975 paper](https://cr.yp.to/bib/1975/aho.pdf) by Aho and Corasick, the algorithm
-        |constructs a **state machine** to process patterns and find matches in a given text in **linear time**.
-        |
-        |**What You’ll Learn:**
-        |- How a **trie** (prefix tree) is built from input keywords.
-        |- How failure transitions are added to create a **state machine**.
-        |- How the algorithm navigates through the state machine to identify matches step-by-step.
-        |
-        |This visualization bridges theory and practice, offering insights into one of the most efficient
-        |algorithms for pattern matching in fields like **bioinformatics**, **text searching**, and **network security**.
-      """.stripMargin
-    text(educationalText, 100, 500, width - 200, height - 550)
-
+    drawEducationalText(this)
     // Message Section
     fill(70)
     textAlign(LEFT, TOP)
-    text(message, 100, 450, width - 200, height - 550)
+    text(message, 100, 415, width - 200, height - 550)
 
     drawFooter()
   }
@@ -254,7 +238,7 @@ class MainApp extends PApplet {
    */
   private def goToMainMenu(): Unit = {
     inMainMenu = true
-    message = "Output and messages will appear here."
+    message = ""
     trieVisualizer = null
     VPM = null
     isTypingInput = false
