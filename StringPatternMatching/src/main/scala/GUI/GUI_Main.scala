@@ -119,10 +119,20 @@ class MainApp extends PApplet {
   private def drawVisualization(): Unit = {
     // Visualization Area
     fill(230)
-    rect(50, 120, width - 100, height - 200, 10)
+    noStroke()
+    rect(50, 120, width - 180, height - 175, 10)
+    // Header
+    fill(30, 144, 255)
+    rect(0, 0, width, 100)
+    fill(255)
+    textSize(22)
+    text("Aho-Corasick Algorithm Visualization", width / 2, 50)
+
+    drawFooter()
 
     trieVisualizer.visTrie()
     VPM.step()
+
 
     drawButton(this,stepButtonRect, "Step", isInside(mouseX, mouseY, stepButtonRect))
     drawButton(this,backButtonRect, "Back", isInside(mouseX, mouseY, backButtonRect))
@@ -214,8 +224,9 @@ class MainApp extends PApplet {
    * Runs a pre-defined example visualization of the Aho-Corasick algorithm.
    */
   private def runExampleTrie(): Unit = {
-    val keywords = List("hers", "she", "his", "he")
-    searchString = "sher is hers"
+    val keywords = List("rain", "train", "brain", "pain")
+    val searchString = "the train faced rain and pain"
+
     message = s"${keywords.mkString(", ")}"
     trieVisualizer = new VisualizeTrie(buildTrie(keywords), this)
     VPM = new VisualizePatternMatching(buildTrie(keywords), trieVisualizer.statePositions, this, searchString, keywords)

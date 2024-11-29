@@ -48,10 +48,10 @@ class VisualizeTrie(trie: Map[Int, State], parent: PApplet) {
    */
   def visTrie(): Unit = {
     // Draw the root state and recursively visualize the trie
-    drawState(root, 50, parent.height / 9) // Start drawing from the left side, center vertically
+    drawState(root, 70, 170) // Start drawing from the left side, center vertically
     if (root.Successor.nonEmpty) {
       for ((input, childID) <- root.Successor) {
-        recTrie(Trie(childID), input, 50, parent.height / 9, 1) // Start recursion with level = 1
+        recTrie(Trie(childID), input, 70, 170, 1) // Start recursion with level = 1
       }
     }
   }
