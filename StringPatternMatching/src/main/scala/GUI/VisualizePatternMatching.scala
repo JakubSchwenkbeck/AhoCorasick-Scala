@@ -207,7 +207,7 @@ class VisualizePatternMatching(
    def drawSearchText(): Unit = {
     val baseX = 750
     val baseY = 600
-    val lineLength = 40 // Number of characters per line
+    val lineLength = 32 // Number of characters per line
 
     text.zipWithIndex.foreach { case (char, i) =>
       val xPos = baseX + 15 * (i % lineLength)
