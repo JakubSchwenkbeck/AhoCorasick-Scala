@@ -95,32 +95,36 @@ class VisualizeTrie(trie: Map[Int, State], parent: PApplet) {
    * @param ypos Y-coordinate for the state.
    */
   private def drawState(st: State, xpos: Int, ypos: Int): Unit = {
-    val ID = st.ID
-    statePositions(ID) = (xpos, ypos) // Save the position of this state
-
-    // Draw the circle representing the state
-    if (st.endState) {
-      parent.fill(255, 153, 153) // Soft red for end states
-      parent.stroke(204, 0, 0) // Bold outline for end states
-      parent.strokeWeight(2)
+    if (xpos > parent.width || ypos > parent.height) {
+      throw new Exception("trie is too big")
     } else {
-      parent.fill(173, 216, 230) // Soft blue for regular states
-      parent.stroke(0, 102, 204) // Blue outline
-      parent.strokeWeight(1)
-    }
-    parent.ellipse(xpos, ypos, circleR, circleR)
+      val ID = st.ID
+      statePositions(ID) = (xpos, ypos) // Save the position of this state
 
-    // Draw the state's ID inside the circle
-    parent.fill(0) // Black text
-    parent.textAlign(CENTER, CENTER)
-    parent.textSize(14)
-    parent.text(ID.toString, xpos, ypos)
+      // Draw the circle representing the state
+      if (st.endState) {
+        parent.fill(255, 153, 153) // Soft red for end states
+        parent.stroke(204, 0, 0) // Bold outline for end states
+        parent.strokeWeight(2)
+      } else {
+        parent.fill(173, 216, 230) // Soft blue for regular states
+        parent.stroke(0, 102, 204) // Blue outline
+        parent.strokeWeight(1)
+      }
+      parent.ellipse(xpos, ypos, circleR, circleR)
 
-    // Draw the keyword next to end states
-    if (st.endState && st.keyword.isDefined) {
-      parent.textSize(12)
-      parent.fill(0)
-      parent.text(st.keyword.get, xpos + circleR / 2 + 20, ypos)
+      // Draw the state's ID inside the circle
+      parent.fill(0) // Black text
+      parent.textAlign(CENTER, CENTER)
+      parent.textSize(14)
+      parent.text(ID.toString, xpos, ypos)
+
+      // Draw the keyword next to end states
+      if (st.endState && st.keyword.isDefined) {
+        parent.textSize(12)
+        parent.fill(0)
+        parent.text(st.keyword.get, xpos + circleR / 2 + 20, ypos)
+      }
     }
   }
 
