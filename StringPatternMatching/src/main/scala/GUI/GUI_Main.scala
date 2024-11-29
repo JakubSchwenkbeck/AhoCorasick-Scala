@@ -81,6 +81,7 @@ class MainApp extends PApplet {
       drawButton(backButtonRect, "Back")
 
       VPM.drawSearchText()
+      VPM.drawKeywords()
       noLoop()
       trieVisualizer.resetVis()
 

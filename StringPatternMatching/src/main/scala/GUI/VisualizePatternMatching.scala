@@ -18,7 +18,7 @@ class VisualizePatternMatching(
   private var currentCharIndex: Int = -1 // Index of the character being processed
   private var matches: List[(Int, String)] = List() // To store matches found
   private var animationPaused: Boolean = true // Control step-by-step animation
-
+  var currentMatch : Option[Int] = None
   // Getters
   def getCurrentStateID: Int = currentStateID
   def getMatches: List[(Int, String)] = matches
@@ -41,6 +41,7 @@ class VisualizePatternMatching(
         currentStateID = gotoOutput
         trie.get(currentStateID).foreach { currentState =>
           if (currentState.endState) {
+            currentMatch = Some(currentState.keyword.get.length)
             matches = matches :+ (currentCharIndex + 1, currentState.keyword.get)
             visualizeMatch(currentState.ID, currentState.keyword.get)
           }
@@ -113,7 +114,7 @@ class VisualizePatternMatching(
   private def visualizeMatch(index: Int, keyword: String): Unit = {
     println("match found at " + keyword)
 
-    val charX = 600
+    val charX = 700
     val charY = 500
     parent.fill(0, 0, 255) // Bright blue for matches
     parent.stroke(0, 102, 204) // Blue outline
@@ -132,18 +133,44 @@ class VisualizePatternMatching(
   }
 
 
+  def drawKeywords(): Unit = {
+    var offset = 0
+    val baseX = 700
+    val baseY = 400
+    for(key <- keywords){
+      parent.text(key,baseX,baseY + offset)
+      offset += 25
+
+    }
+
+
+  }
+
+
    def drawSearchText(): Unit = {
     println(currentCharIndex)
     val baseX = 600
     val baseY = 600
 
     for (i <- text.indices) {
-      if (i == currentCharIndex) {
-          parent.fill(0, 255, 0)
-        }
+      if(currentMatch.nonEmpty){
+
+        if (i >= (currentCharIndex - currentMatch.getOrElse(0) +1 ) && i <= currentCharIndex ) {
+
+            parent.fill(0, 0, 255)
+
+          }else {
+            parent.fill(50)
+          }
+        }else if(currentCharIndex == i ){
+        parent.fill(0, 255, 0)
+
+          }
         else {
           parent.fill(50)
-        } // Bright white for the current character, dim gray for others
+        }
+
+
       if (baseX + 15 * i < parent.width || baseY < parent.height) {
         parent.text(text.charAt(i), baseX + 15 * i, baseY)
       }else{
@@ -151,6 +178,7 @@ class VisualizePatternMatching(
         parent.text(text.charAt(i), baseX + 15 * (i - 20) , baseY+50)
       }
     }
+     currentMatch = None
   }
   def fail(stateID: Int): Int = { // actual magic happens in computeFail
     fails(stateID) // Return the fail link for the current state
