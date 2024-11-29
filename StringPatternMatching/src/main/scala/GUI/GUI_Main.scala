@@ -224,8 +224,8 @@ class MainApp extends PApplet {
    * Runs a pre-defined example visualization of the Aho-Corasick algorithm.
    */
   private def runExampleTrie(): Unit = {
-    val keywords = List("rain", "train", "brain", "pain")
-    val searchString = "the train faced rain and pain"
+    val keywords = List("sub", "in", "ext")
+    val searchString = "searching for substrings in my text"
 
     message = s"${keywords.mkString(", ")}"
     trieVisualizer = new VisualizeTrie(buildTrie(keywords), this)

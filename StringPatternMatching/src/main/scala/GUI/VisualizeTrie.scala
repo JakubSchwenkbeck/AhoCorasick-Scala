@@ -96,7 +96,7 @@ class VisualizeTrie(trie: Map[Int, State], parent: PApplet) {
    */
   private def drawState(st: State, xpos: Int, ypos: Int): Unit = {
     if (xpos > parent.width || ypos > parent.height) {
-      throw new Exception("trie is too big")
+      //throw new Exception("trie is too big")
     } else {
       val ID = st.ID
       statePositions(ID) = (xpos, ypos) // Save the position of this state

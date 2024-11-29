@@ -164,7 +164,7 @@ class VisualizePatternMatching(
    * Render the list of keywords neatly in a right-aligned column.
    */
    def drawKeywords(): Unit = {
-    val baseX = 800
+    val baseX = 750
     val baseY = 300
 
     parent.fill(50) // Dark gray text
@@ -184,7 +184,7 @@ class VisualizePatternMatching(
    * Display matches found so far in a separate section.
    */
    private def drawMatches(): Unit = {
-    val baseX = 800
+    val baseX = 750
     val baseY = 500
 
     parent.fill(50) // Dark gray text
@@ -205,7 +205,7 @@ class VisualizePatternMatching(
    */
 
    def drawSearchText(): Unit = {
-    val baseX = 800
+    val baseX = 750
     val baseY = 600
     val lineLength = 40 // Number of characters per line
 
