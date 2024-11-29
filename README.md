@@ -55,6 +55,10 @@ cd StringPatternMatching
 ```bash
 sbt run
 ```
+---
+### This screenshot displays the trie structure and step-by-step pattern matching, illustrating how the algorithm processes the input string and identifies matches.
+
+![image](https://github.com/user-attachments/assets/1101112a-0e34-4791-b083-14f74734b3c5)
 
 ---
 
