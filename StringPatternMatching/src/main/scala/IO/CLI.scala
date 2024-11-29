@@ -4,6 +4,7 @@ import Main.searchString
 import Main.example
 import Main.searchFile
 import scala.io.StdIn
+import GUI.Gui_Main
 
 // Function to run the command line interface (CLI)
 def runCLI(): Unit = {
@@ -22,6 +23,7 @@ def runCLI(): Unit = {
         println("Available commands:")
         println("  help             - Show this help message")
         println("  exit, q, quit    - Exit the CLI")
+        println("   gui             - start the GUI")
         println("  example          - Run the example function")
         println("  search file [input_file] [output_file] - Search file operation")
         println("  search [string] [substring1 substring2 ...] - Search substrings in string")
@@ -29,6 +31,8 @@ def runCLI(): Unit = {
       case "exit" | "q" | "quit" =>
         println("Goodbye!")
         running = false
+
+      case "gui" => Gui_Main.main(Array())
 
       case "example" =>
         example() // Call the example function
