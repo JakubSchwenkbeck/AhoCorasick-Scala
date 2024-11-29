@@ -1,9 +1,9 @@
 package GUI
 
+import GUI.UTILS.DrawingUtils.{drawButton, drawInputField}
 import processing.core.PApplet
 import processing.core.PConstants.*
 import Main.*
-
 /**
  * The entry point for the Aho-Corasick visualization GUI.
  * This object launches the main Processing sketch.
@@ -80,8 +80,9 @@ class MainApp extends PApplet {
     }
   }
 
+
   /**
-   * Renders the main menu interface, including buttons and input fields.
+   * Renders the main menu interface, including buttons, input fields, and an educational overview.
    */
   private def drawMainMenu(): Unit = {
     // Subtitle
@@ -91,12 +92,33 @@ class MainApp extends PApplet {
     text("Select an option or enter your input below", width / 2, 120)
 
     // Buttons
-    drawButton(exampleButtonRect, "Run Example", isInside(mouseX, mouseY, exampleButtonRect))
-    drawButton(buildButtonRect, "Build Trie", isInside(mouseX, mouseY, buildButtonRect))
+    drawButton(this,exampleButtonRect, "Run Example", isInside(mouseX, mouseY, exampleButtonRect))
+    drawButton(this,buildButtonRect, "Build Trie", isInside(mouseX, mouseY, buildButtonRect))
 
     // Input Fields
-    drawInputField("Keywords", inputField, 100, 250, isTypingInput)
-    drawInputField("Search Text", searchTextField, 100, 350, isTypingSearchText)
+    drawInputField(this,"Keywords", inputField, 100, 250, isTypingInput)
+    drawInputField(this,"Search Text", searchTextField, 100, 350, isTypingSearchText)
+
+    // Educational Overview Section
+    fill(30, 144, 255)
+    textAlign(LEFT, TOP)
+    textSize(14)
+    val educationalText =
+      """
+        |**Educational Overview**
+        |This tool visualizes the **Aho-Corasick Algorithm**, a method for efficient **multi-pattern string matching**.
+        |Inspired by the seminal [1975 paper](https://cr.yp.to/bib/1975/aho.pdf) by Aho and Corasick, the algorithm
+        |constructs a **state machine** to process patterns and find matches in a given text in **linear time**.
+        |
+        |**What You’ll Learn:**
+        |- How a **trie** (prefix tree) is built from input keywords.
+        |- How failure transitions are added to create a **state machine**.
+        |- How the algorithm navigates through the state machine to identify matches step-by-step.
+        |
+        |This visualization bridges theory and practice, offering insights into one of the most efficient
+        |algorithms for pattern matching in fields like **bioinformatics**, **text searching**, and **network security**.
+      """.stripMargin
+    text(educationalText, 100, 500, width - 200, height - 550)
 
     // Message Section
     fill(70)
@@ -105,6 +127,7 @@ class MainApp extends PApplet {
 
     drawFooter()
   }
+
 
   /**
    * Renders the visualization interface for the trie and pattern matching process.
@@ -117,8 +140,8 @@ class MainApp extends PApplet {
     trieVisualizer.visTrie()
     VPM.step()
 
-    drawButton(stepButtonRect, "Step", isInside(mouseX, mouseY, stepButtonRect))
-    drawButton(backButtonRect, "Back", isInside(mouseX, mouseY, backButtonRect))
+    drawButton(this,stepButtonRect, "Step", isInside(mouseX, mouseY, stepButtonRect))
+    drawButton(this,backButtonRect, "Back", isInside(mouseX, mouseY, backButtonRect))
 
     VPM.drawSearchText()
     VPM.drawKeywords()
@@ -139,51 +162,7 @@ class MainApp extends PApplet {
     text("Educational Tool for Understanding String Matching Algorithms", width / 2, height - 25)
   }
 
-  /**
-   * Draws a button with a hover effect.
-   * @param rectangle Tuple containing the button's x, y, width, and height.
-   * @param label Text label displayed on the button.
-   * @param isHovered True if the mouse is hovering over the button.
-   */
-  private def drawButton(rectangle: (Int, Int, Int, Int), label: String, isHovered: Boolean): Unit = {
-    val (x, y, w, h) = rectangle
-    fill(if (isHovered) color(70, 130, 180) else 200)
-    stroke(0)
-    rect(x, y, w, h, 10)
-    fill(255)
-    textAlign(CENTER, CENTER)
-    textSize(14)
-    text(label, x + w / 2, y + h / 2)
-  }
 
-  /**
-   * Draws an input field with a label and typing indicator.
-   * @param label Label for the input field.
-   * @param fieldValue Current value of the input field.
-   * @param x X-coordinate for the input field.
-   * @param y Y-coordinate for the input field.
-   * @param isActive True if the field is currently active for typing.
-   */
-  private def drawInputField(label: String, fieldValue: String, x: Int, y: Int, isActive: Boolean): Unit = {
-    val w = 600
-    val h = 50
-
-    // Label
-    fill(50)
-    textAlign(LEFT, CENTER)
-    textSize(14)
-    text(s"$label:", x, y - 30)
-
-    // Input Field
-    fill(255)
-    stroke(if (isActive) color(30, 144, 255) else 150) // Highlight active field
-    strokeWeight(2)
-    rect(x, y, w, h, 10)
-
-    fill(50)
-    textAlign(LEFT, CENTER)
-    text(if (isActive) fieldValue + "|" else fieldValue, x + 10, y + h / 2)
-  }
 
   /**
    * Handles mouse clicks and performs actions based on button or input field interaction.

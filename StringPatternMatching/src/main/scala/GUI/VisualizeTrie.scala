@@ -4,7 +4,7 @@ import Main.State
 import processing.core.PApplet
 import processing.core.PApplet.*
 import processing.core.PConstants.*
-import GUI.DrawingUtils.*
+import GUI.UTILS.*
 
 import scala.collection.mutable
 
