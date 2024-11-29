@@ -139,11 +139,11 @@ class MainApp extends PApplet {
    */
   private def drawFooter(): Unit = {
     fill(200)
-    rect(0, height - 50, width, 50)
+    rect(0, height - 120, width, 50)
     fill(100)
     textSize(12)
     textAlign(CENTER, CENTER)
-    text("Educational Tool for Understanding String Matching Algorithms", width / 2, height - 25)
+    text("Educational Tool for Understanding String Matching Algorithms", width / 2, height - 95)
   }
 
 
