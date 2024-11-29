@@ -15,7 +15,7 @@ class VisualizePatternMatching(
   private val fails: Map[Int, Int] = Main.computeFail(trie)
 
   private var currentStateID: Int = 0 // Starting state
-  private var currentCharIndex: Int = -1 // Index of the character being processed
+  var currentCharIndex: Int = -1 // Index of the character being processed
   private var matches: List[(Int, String)] = List() // To store matches found
   private var animationPaused: Boolean = true // Control step-by-step animation
 
@@ -133,11 +133,14 @@ class VisualizePatternMatching(
 
 
    def drawSearchText(): Unit = {
+    println(currentCharIndex)
     val baseX = 10
     val baseY = parent.height - 20
     for (i <- text.indices) {
-      parent.fill(if (i == currentCharIndex) 0 else 50) // Bright white for the current character, dim gray for others
-      parent.text(text.charAt(i), baseX + i * 15, baseY)
+      if (i == currentCharIndex) {
+        parent.fill(0,255,0)}
+       else {parent.fill(50)} // Bright white for the current character, dim gray for others
+      parent.text(text.charAt(i), 600 + 15*i, 600)
     }
   }
   def fail(stateID: Int): Int = { // actual magic happens in computeFail

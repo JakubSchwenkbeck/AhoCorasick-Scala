@@ -84,7 +84,7 @@ class MainApp extends PApplet {
       noLoop()
       trieVisualizer.resetVis()
 
-      drawText()
+      //drawText()
     }
   }
 
