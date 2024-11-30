@@ -23,6 +23,10 @@ class RealWorldMain(parent : PApplet) {
         displayIntroText(parent)
 
       case Malware =>
+
+        parent.fill(230)
+        parent.noStroke()
+        parent.rect(50, 220, 520 , 720, 10)
         Mw.displayMalwareDetectionExample(parent)
 
       case DNA =>

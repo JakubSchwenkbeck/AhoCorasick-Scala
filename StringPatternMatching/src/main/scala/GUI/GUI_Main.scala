@@ -5,6 +5,7 @@ import GUI.UTILS.DrawingUtils.{drawButton, drawEducationalText, drawInputField}
 import processing.core.PApplet
 import processing.core.PConstants.*
 import Main.*
+import GUI.UTILS.Style.*
 /**
  * The entry point for the Aho-Corasick visualization GUI.
  * This object launches the main Processing sketch.
@@ -251,17 +252,7 @@ class MainApp extends PApplet {
     }
   }
 
-  /**
-   * Checks if a point is within a rectangle.
-   * @param mx X-coordinate of the point.
-   * @param my Y-coordinate of the point.
-   * @param rect Rectangle defined as a tuple (x, y, width, height).
-   * @return True if the point is inside the rectangle, otherwise false.
-   */
-  private def isInside(mx: Int, my: Int, rect: (Int, Int, Int, Int)): Boolean = {
-    val (x, y, w, h) = rect
-    mx >= x && mx <= x + w && my >= y && my <= y + h
-  }
+
 
   /**
    * Runs a pre-defined example visualization of the Aho-Corasick algorithm.
