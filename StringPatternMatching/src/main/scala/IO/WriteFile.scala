@@ -3,7 +3,7 @@ import java.nio.file.{Files, Paths}
 import java.nio.charset.StandardCharsets
 // Function to highlight substrings in the input string
 def highlightSubstrings(input: String, pairs: List[(Int, String)]): String = {
-  // Sort pairs by the index of the last character of the substring (in ascending order)
+  // Sort pairs by the index of the last character of the substring (ascending order)
   val sortedPairs = pairs.sortBy(_._1)
 
   // A mutable StringBuilder to build the highlighted string efficiently
@@ -13,21 +13,36 @@ def highlightSubstrings(input: String, pairs: List[(Int, String)]): String = {
 
   // Iterate through the sorted pairs
   for ((index, substring) <- sortedPairs) {
-    // Append the part of the original string before the current substring
-    result.append(input.substring(currentIndex, index - substring.length + 1))
+    val startIndex = index - substring.length
 
-    // Append the highlighted substring with [[ ]]
-    result.append(s"[[${substring}]]")
+    // Ensure indices are valid and non-overlapping
+    if (startIndex >= currentIndex && index < input.length) {
+      // Append the part of the original string before the current substring
+      result.append(input.substring(currentIndex, startIndex))
 
-    // Update currentIndex to the position after the highlighted substring
-    currentIndex = index + 1
+      // Append the highlighted substring with delimiters
+      result.append(s"[[${substring}]] ")
+
+      // Update currentIndex to the position after the highlighted substring
+      currentIndex = index + 1
+    } else {
+      // ONLY FOR DEBUG, as normal workflow shouldn't be interrupted by Exceptions
+      /*throw new IllegalArgumentException(
+        s"Invalid indices: startIndex=$startIndex, index=$index, currentIndex=$currentIndex, input.length=${input.length}"
+      )*/
+    }
   }
 
   // Append any remaining part of the string after the last highlighted substring
-  result.append(input.substring(currentIndex))
+  if (currentIndex < input.length) {
+    result.append(input.substring(currentIndex))
+  }
 
   result.toString()
 }
+
+
+
 
 // Function to write content to a file at a given path
 def writeToFile(path: String, content: String): Unit = {
