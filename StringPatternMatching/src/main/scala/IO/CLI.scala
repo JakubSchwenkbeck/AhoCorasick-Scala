@@ -23,9 +23,9 @@ def runCLI(): Unit = {
         println("Available commands:")
         println("  help             - Show this help message")
         println("  exit, q, quit    - Exit the CLI")
-        println("   gui             - start the GUI")
+        println("  gui             - start the GUI")
         println("  example          - Run the example function")
-        println("  search file [input_file] [output_file] - Search file operation")
+        println("  search file [input_file] [keyword_file] [output_file]  - Search file operation")
         println("  search [string] [substring1 substring2 ...] - Search substrings in string")
 
       case "exit" | "q" | "quit" =>
@@ -39,12 +39,10 @@ def runCLI(): Unit = {
 
       case command if command.startsWith("search file") =>
         val args = command.stripPrefix("search file").trim.split("\\s+")
-        if (args.length == 2) {
-          val inputFile = args(0)
-          val keywordFile = args(1)
-          val output = "StandardOutput.txt"
-          searchFile(inputFile, keywordFile,output)
-        } else if(args.length == 2) {
+        if (args.length == 1) {
+          // standard
+          searchFile("src/main/scala/files/search.txt", "src/main/scala/files/keywords.txt", "src/main/scala/files/output.txt")
+        } else if(args.length == 3) {
           val inputFile = args(0)
           val keywordFile = args(1)
           val output = args(2)

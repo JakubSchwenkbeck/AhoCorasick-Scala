@@ -12,7 +12,6 @@ import IO.*
  */
 @main
 def main() : Unit =
-  //searchFile("src/main/scala/files/search.txt", "src/main/scala/files/keywords.txt","src/main/scala/files/output.txt")
   runCLI()
 
 
