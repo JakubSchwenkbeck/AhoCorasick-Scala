@@ -1,8 +1,6 @@
 package IO
 
-import Main.searchString
-import Main.example
-import Main.searchFile
+import API.{example, searchFile, searchString}
 import scala.io.StdIn
 import GUI.Gui_Main
 

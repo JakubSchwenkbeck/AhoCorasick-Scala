@@ -1,9 +1,10 @@
-package Main
+package API
 
 import IO.*
-import java.nio.file.{Paths, Files}
+import Main.*
+import java.nio.file.StandardOpenOption.*
+import java.nio.file.{Files, Paths}
 import scala.io.Source
-import java.nio.file.StandardOpenOption._
 
 /**
  * Searches for occurrences of keywords within a string and prints the result in a formatted way.
