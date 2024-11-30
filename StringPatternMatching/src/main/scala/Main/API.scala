@@ -48,5 +48,7 @@ def searchFile(inputFile: String, keywordsFile: String, outputFile: String): Uni
   // Perform keyword searching using the Finite State Machine
   val res = FiniteStateMachine(str, ls).PMM()
 
+
+
   // Write the original text and search results to the output file
-  writeToFile(outputPath.toString, str + res)
+   writeToFile(outputPath.toString,   highlightSubstrings(str,res))
