@@ -20,20 +20,33 @@ def drawNewInputField(parent: PApplet,label: String, value: String, x: Int, y: I
   parent.textAlign(LEFT, CENTER)
   parent.text(value, x + padding, y + fieldHeight / 2)
 }
- def drawRoundedButton(parent : PApplet,recta: (Int, Int, Int, Int), label: String): Unit = {
-  val (x, y, w, h) = recta
-  val isHover = isInside(parent.mouseX, parent.mouseY, recta)
-   parent.fill(if (isHover) parent.color(30, 130, 230) else parent.color(20, 120, 200))
-   parent.stroke(255)
-   parent.strokeWeight(2)
-   parent.rect(recta._1, recta._2, recta._3, recta._4, 12)
-   parent.fill(255)
-   parent.noStroke()
-   parent.textSize(16)
-   parent.textAlign(CENTER, CENTER)
-   parent.text(label, x + w / 2, y + h / 2)
-}
-/**
+  def drawRoundedButton(parent: PApplet, recta: (Int, Int, Int, Int), label: String): Unit = {
+    val (x, y, w, h) = recta
+    val isHover = isInside(parent.mouseX, parent.mouseY, recta)
+
+    // Subtle gradient or inner shadow effect for the button
+    parent.noStroke()
+    if (isHover) {
+      parent.fill(240) // Lighter background for hover
+      parent.rect(x - 2, y - 2, w + 4, h + 4, 14) // Slight glow effect
+    }
+
+    // Button body
+    parent.fill(255) // Clean white base
+    parent.stroke(if (isHover) parent.color(30, 130, 230) else parent.color(200)) // Blue border on hover
+    parent.strokeWeight(2)
+    parent.rect(x, y, w, h, 12)
+
+    // Text
+    parent.fill(if (isHover) parent.color(30, 130, 230) else parent.color(80)) // Text turns blue on hover
+    parent.noStroke()
+    parent.textSize(16)
+    parent.textAlign(CENTER, CENTER)
+    parent.text(label, x + w / 2, y + h / 2)
+  }
+
+
+  /**
  * Checks if a point is within a rectangle.
  * @param mx X-coordinate of the point.
  * @param my Y-coordinate of the point.
