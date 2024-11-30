@@ -116,8 +116,8 @@ class MainApp extends PApplet {
     drawButton(this,RWButtonRect,"Real World Examples",isInside(mouseX, mouseY, RWButtonRect))
 
     // Input Fields
-    drawInputField(this,"Keywords", inputField, 100, 250, isTypingInput)
-    drawInputField(this,"Search Text", searchTextField, 100, 350, isTypingSearchText)
+    drawNewInputField(this,"Keywords", inputField, 100, 250, isTypingInput)
+    drawNewInputField(this,"Search Text", searchTextField, 100, 350, isTypingSearchText)
 
     // Educational Overview Section
     fill(30, 144, 255)

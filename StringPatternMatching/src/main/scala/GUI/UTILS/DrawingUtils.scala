@@ -2,7 +2,7 @@ package GUI.UTILS
 
 import processing.core.PApplet
 import processing.core.PConstants._
-
+import Style.*
 object DrawingUtils {
 
   // Function to draw an arrowhead with PApplet parameter
@@ -51,7 +51,7 @@ object DrawingUtils {
 
   // Function to draw a button with hover effect, using PApplet for all Processing calls
   def drawButton(parent: PApplet, rectangle: (Int, Int, Int, Int), label: String, isHovered: Boolean): Unit = {
-    val (x, y, w, h) = rectangle
+   /* val (x, y, w, h) = rectangle
     parent.fill(if (isHovered) parent.color(70, 130, 180) else 200)
     parent.stroke(0)
     parent.rect(x, y, w, h, 10)
@@ -59,6 +59,8 @@ object DrawingUtils {
     parent.textAlign(CENTER, CENTER)
     parent.textSize(14)
     parent.text(label, x + w / 2, y + h / 2)
+    */
+    drawRoundedButton(parent,rectangle,label)
   }
 
   // Function to draw an input field with label and typing indicator, using PApplet for all Processing calls

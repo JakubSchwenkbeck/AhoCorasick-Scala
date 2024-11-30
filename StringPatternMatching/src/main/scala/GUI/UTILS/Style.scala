@@ -3,7 +3,7 @@ import processing.core.PApplet
 import processing.core.PConstants.*
 
 object Style{
-def drawInputField(parent: PApplet,label: String, value: String, x: Int, y: Int, isActive: Boolean): Unit = {
+def drawNewInputField(parent: PApplet,label: String, value: String, x: Int, y: Int, isActive: Boolean): Unit = {
   val fieldWidth = 600
   val fieldHeight = 40
   val padding = 10
@@ -32,7 +32,7 @@ def drawInputField(parent: PApplet,label: String, value: String, x: Int, y: Int,
    parent.textSize(16)
    parent.textAlign(CENTER, CENTER)
    parent.text(label, x + w / 2, y + h / 2)
-}  
+}
 /**
  * Checks if a point is within a rectangle.
  * @param mx X-coordinate of the point.
