@@ -53,3 +53,7 @@ def searchFile(inputFile: String, keywordsFile: String, outputFile: String): Uni
 
   // Write the original text and search results to the output file
    writeToFile(outputPath.toString,   highlightSubstrings(str,res))
+
+def searchAndMatch(str:String, keywords : List[String]) : List[(Int,String)] = {
+  FiniteStateMachine(str, keywords).PMM()
+}
