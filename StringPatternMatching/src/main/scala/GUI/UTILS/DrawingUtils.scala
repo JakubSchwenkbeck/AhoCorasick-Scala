@@ -163,5 +163,165 @@ object DrawingUtils {
 
   }
 
+  // Helper function to display the bolded keyword
+  def displayBoldKeywordText(parent: PApplet, xPosition: Float, currentY: Float, keyword: String, explanation: String): Unit = {
+    parent.textSize(16)
+    // Split the keyword into the bold part and the rest
+    val boldKeyword = keyword.substring(2) // Skip "- " at the beginning of the keyword
+    val normalText = explanation
+
+    // Set the text to bold for the keyword
+    parent.textFont(parent.createFont("Arial", 16, true)) // Make font bold
+    parent.text(boldKeyword, xPosition, currentY) // Display the keyword in bold
+    parent.textFont(parent.createFont("Arial", 16, false)) // Reset the font back to normal
+
+    // Now display the explanation after the keyword
+    parent.text(normalText, xPosition + parent.textWidth(boldKeyword) + 5, currentY) // Adjust position to the right of the keyword
+  }
+
+  /**
+   * Render the full text with highlighted keywords directly on the Processing canvas.
+   * Each new line in the input text will start on a new line in the rendered output.
+   *
+   * @param parent     The PApplet canvas to render the text on
+   * @param ls         A list of pairs: (index of last Char where keyword was found, keyword), so (Integer, String)
+   * @param fulltext   The full String where substring search is performed on
+   * @param xPosition  X coordinate for text rendering
+   * @param yPosition  Y coordinate for text rendering
+   * @param lineHeight The height of each line for rendering
+   * @param maxWidth   The maximum width of the text area before wrapping to a new line
+   */
+  def prettyprint(
+                   parent: PApplet,
+                   ls: List[(Int, String)],
+                   fulltext: String,
+                   xPosition: Float,
+                   yPosition: Float,
+                   lineHeight: Float,
+                   maxWidth: Float
+                 ): Unit = {
+    // Split the full text into lines
+    val lines = fulltext.split("\n")
+
+    // Track current rendering position
+    var currentY = yPosition
+
+    // Process each line
+    for (line <- lines) {
+      // Extract matches relevant to this line
+      val lineStartIdx = fulltext.indexOf(line)
+      val lineEndIdx = lineStartIdx + line.length
+      val lineMatches = ls.filter { case (index, _) =>
+        index >= lineStartIdx && index < lineEndIdx
+      }.map { case (index, keyword) =>
+        (index - lineStartIdx, keyword) // Adjust indices relative to the line
+      }
+
+      // Render the line
+      renderLine(parent, lineMatches, line, xPosition, currentY, lineHeight, maxWidth)
+      currentY += lineHeight
+    }
+  }
+
+  /**
+   * Render a single line with highlighted keywords.
+   *
+   * @param parent     The PApplet canvas to render the text on
+   * @param ls         A list of pairs: (index of last Char where keyword was found, keyword), so (Integer, String)
+   * @param line       The current line to render
+   * @param xPosition  X coordinate for text rendering
+   * @param yPosition  Y coordinate for text rendering
+   * @param lineHeight The height of each line for rendering
+   * @param maxWidth   The maximum width of the text area before wrapping to a new line
+   */
+  def renderLine(
+                  parent: PApplet,
+                  ls: List[(Int, String)],
+                  line: String,
+                  xPosition: Float,
+                  yPosition: Float,
+                  lineHeight: Float,
+                  maxWidth: Float
+                ): Unit = {
+    // Sort the list by index for consistent highlighting
+    val sortedLs = ls.sortBy(_._1)
+
+    // Variables to track rendering state
+    var currentX = xPosition
+    var lastIdx = 0
+
+    // Highlight the text as per matches
+    for ((endIdx, keyword) <- sortedLs) {
+      val startIdx = endIdx - keyword.length
+
+      // Render normal text before the match
+      val normalText = line.substring(lastIdx, startIdx)
+      for (char <- normalText) {
+        val charWidth = parent.textWidth(char.toString)
+        if (currentX + charWidth > maxWidth) {
+          currentX = xPosition
+        }
+        parent.fill(0) // Black color for normal text
+        parent.text(char, currentX, yPosition)
+        currentX += charWidth
+      }
+
+      // Render the highlighted keyword
+      val highlightedKeyword = line.substring(startIdx, endIdx)
+      for (char <- highlightedKeyword) {
+        val charWidth = parent.textWidth(char.toString)
+        if (currentX + charWidth > maxWidth) {
+          currentX = xPosition
+        }
+        parent.fill(255, 0, 0) // Red color for highlighted text
+        parent.text(char, currentX, yPosition)
+        currentX += charWidth
+      }
+
+      // Update last index
+      lastIdx = endIdx
+    }
+
+    // Render any remaining normal text after the last match
+    val remainingText = line.substring(lastIdx)
+    for (char <- remainingText) {
+      val charWidth = parent.textWidth(char.toString)
+      if (currentX + charWidth > maxWidth) {
+        currentX = xPosition
+      }
+      parent.fill(0) // Black color
+      parent.text(char, currentX, yPosition)
+      currentX += charWidth
+    }
+  }
+
+  /**
+   * Displays a list of keywords on the Processing canvas at a specified position.
+   *
+   * @param parent     The PApplet canvas to render the text on
+   * @param keywords   The list of keywords to display
+   * @param xPosition  X coordinate for rendering the list
+   * @param yPosition  Y coordinate for rendering the list
+   * @param lineHeight Spacing between each keyword
+   */
+  def displayKeywords(
+                       parent: PApplet,
+                       keywords: List[String],
+                       xPosition: Float,
+                       yPosition: Float,
+                       lineHeight: Float
+                     ): Unit = {
+    parent.textSize(18) // Set text size
+    parent.fill(0,0,255) // Black color for text
+    parent.text("Keywords searched : ",xPosition,yPosition)
+    parent.fill(0)
+    parent.textSize(14) // Set text size
+
+    var currentY = yPosition + 40
+    for (keyword <- keywords) {
+      parent.text(keyword, xPosition, currentY)
+      currentY += lineHeight // Move down for the next keyword
+    }
+  }
 
 }

@@ -1,5 +1,6 @@
 package GUI
 
+import GUI.RealWorldApplications.RealWorldMain
 import GUI.UTILS.DrawingUtils.{drawButton, drawEducationalText, drawInputField}
 import processing.core.PApplet
 import processing.core.PConstants.*
@@ -25,11 +26,22 @@ object Gui_Main extends PApplet {
  */
 class MainApp extends PApplet {
   // GUI State and Dimensions
-  private var inMainMenu = true
+  sealed trait AppState
+
+  object AppState {
+    case object MainMenu extends AppState
+    case object TrieVis extends AppState
+    case object RealWorldApp extends AppState
+  }
+  private var currentState: AppState = AppState.MainMenu
+
+
   private val exampleButtonRect = (100, 150, 200, 50)
   private val buildButtonRect = (350, 150, 200, 50)
-  private val backButtonRect = (100, 850, 200, 50)
-  private val stepButtonRect = (350, 850, 200, 50)
+  private val backButtonRect = (900, 800, 200, 50)
+  private val stepButtonRect = (150, 800, 200, 50)
+  private val RWButtonRect = (600,150,200,50)
+  private val malwareButtonRect = (500,800,200,50)
 
   // Input Fields
   private var inputField = ""
@@ -42,7 +54,7 @@ class MainApp extends PApplet {
   private var message = ""
   private var trieVisualizer: VisualizeTrie = _
   private var VPM: VisualizePatternMatching = _
-
+  private var RWM : RealWorldApplications.RealWorldMain = new RealWorldMain(this)
   /**
    * Configures the canvas size.
    */
@@ -73,11 +85,17 @@ class MainApp extends PApplet {
     textSize(22)
     text("Aho-Corasick Algorithm Visualization", width / 2, 50)
 
-    if (inMainMenu) {
-      drawMainMenu()
-    } else {
-      drawVisualization()
-    }
+
+      currentState match {
+        case AppState.MainMenu =>
+          drawMainMenu()
+        case AppState.TrieVis =>
+          drawVisualization()
+        case AppState.RealWorldApp =>
+          drawRealWorld()
+      }
+
+
   }
 
 
@@ -94,6 +112,7 @@ class MainApp extends PApplet {
     // Buttons
     drawButton(this,exampleButtonRect, "Run Example", isInside(mouseX, mouseY, exampleButtonRect))
     drawButton(this,buildButtonRect, "Build Trie", isInside(mouseX, mouseY, buildButtonRect))
+    drawButton(this,RWButtonRect,"Real World Examples",isInside(mouseX, mouseY, RWButtonRect))
 
     // Input Fields
     drawInputField(this,"Keywords", inputField, 100, 250, isTypingInput)
@@ -144,6 +163,25 @@ class MainApp extends PApplet {
     trieVisualizer.resetVis()
   }
 
+
+
+
+  private def drawRealWorld(): Unit = {
+
+    RWM.draw()
+
+    drawButton(this,backButtonRect, "Back", isInside(mouseX, mouseY, backButtonRect))
+    if(RWM.currState != RWM.Malware) {
+      drawButton(this, malwareButtonRect, "Malware Example", isInside(mouseX, mouseY, malwareButtonRect))
+    }
+    // noLoop()
+
+  }
+
+
+
+
+
   /**
    * Draws a footer section with educational information.
    */
@@ -163,12 +201,13 @@ class MainApp extends PApplet {
    */
   override def mousePressed(): Unit = {
     if (isInside(mouseX, mouseY, exampleButtonRect)) {
-      inMainMenu = false
+      currentState = AppState.TrieVis
       runExampleTrie()
     } else if (isInside(mouseX, mouseY, buildButtonRect)) {
       val keywords = inputField.split(",").map(_.trim).filter(_.nonEmpty).toList
       if (keywords.nonEmpty && searchTextField.nonEmpty) {
-        inMainMenu = false
+        currentState = AppState.TrieVis
+
         buildCustomTrie(keywords, searchTextField)
       } else {
         message = "Please enter valid keywords separated by commas and a non-empty Search Text!"
@@ -183,6 +222,10 @@ class MainApp extends PApplet {
       goToMainMenu()
     } else if (isInside(mouseX, mouseY, stepButtonRect)) {
       redraw()
+    } else if (isInside(mouseX, mouseY, RWButtonRect)) {
+      currentState = AppState.RealWorldApp
+    } else if (isInside(mouseX, mouseY, malwareButtonRect)) {
+      RWM.setMalware()
     } else {
       isTypingInput = false
       isTypingSearchText = false
@@ -248,12 +291,13 @@ class MainApp extends PApplet {
    * Resets the state and returns to the main menu.
    */
   private def goToMainMenu(): Unit = {
-    inMainMenu = true
+    currentState = AppState.MainMenu
     message = ""
     trieVisualizer = null
     VPM = null
     isTypingInput = false
     isTypingSearchText = false
+    RWM.setHome()
     redraw()
     loop() // Restart the draw loop for main menu interactivity
   }
