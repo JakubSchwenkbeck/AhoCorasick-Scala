@@ -2,12 +2,12 @@ package concurrent
 
 import scala.collection.concurrent.TrieMap
 import scala.collection.parallel.CollectionConverters._
-import main.buildGraph
-import main.State
+import Main.buildTrie
+import Main.State
 import scala.collection.mutable.ListBuffer
 class ParallelPatternMatchingMachine(SearchText: String, Keywords: List[String]) {
 
-  private val states: Map[Int, State] = buildGraph(Keywords)
+  private val states: Map[Int, State] = buildTrie(Keywords)
   private val text: String = SearchText
   private val keywords: List[String] = Keywords
   private val fails: Map[Int, Int] = con_computeFail(states)

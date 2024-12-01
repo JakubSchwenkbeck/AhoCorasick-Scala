@@ -4,7 +4,7 @@ import java.io.{BufferedWriter, File, FileWriter}
 import scala.collection.mutable
 import scala.util.Random
 import concurrent._
-import main._
+import Main._
 
 object Benchmark {
 
