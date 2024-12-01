@@ -15,8 +15,9 @@ class ParallelPatternMatchingMachine(SearchText: String, Keywords: List[String])
 
   def PMM(): List[(Int, String)] = {
     // Define the segment size with overlap
-    val maxKeywordLength = keywords.map(_.length).max
-    val segmentSize = Math.max(maxKeywordLength, 100) // Ensure it's at least large enough for the longest keyword
+    val segmentPercentage = 0.1 // Each segment will be 10% of the total text length
+    val segmentSize = (text.length * segmentPercentage).toInt
+
     val overlap = maxKeywordLength - 1
 
     // Create overlapping segments
