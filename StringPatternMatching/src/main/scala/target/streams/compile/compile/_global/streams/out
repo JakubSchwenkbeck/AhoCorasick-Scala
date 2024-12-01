@@ -1,0 +1,34 @@
+[0m[[0m[31merror[0m] [0m[0m/home/jakub/Projects/StringPatternMatching/StringPatternMatching/src/main/scala/FailureFunction.scala:6:1: expected class or object definition[0m
+[0m[[0m[31merror[0m] [0m[0mdef computeFail( states: Map[Int, State]): Map[Int, Int] = {[0m
+[0m[[0m[31merror[0m] [0m[0m^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/jakub/Projects/StringPatternMatching/StringPatternMatching/src/main/scala/FiniteStateMachine.scala:41:5: illegal start of simple expression[0m
+[0m[[0m[31merror[0m] [0m[0m    var Output: List[(Int, String)] = List() // empty list[0m
+[0m[[0m[31merror[0m] [0m[0m    ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/jakub/Projects/StringPatternMatching/StringPatternMatching/src/main/scala/FiniteStateMachine.scala:79:5: illegal start of simple expression[0m
+[0m[[0m[31merror[0m] [0m[0m    val currentStateOpt: Option[State] = states.get(currentStateID)[0m
+[0m[[0m[31merror[0m] [0m[0m    ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/jakub/Projects/StringPatternMatching/StringPatternMatching/src/main/scala/Main.scala:12:1: expected start of definition[0m
+[0m[[0m[31merror[0m] [0m[0mdef main() : Unit =[0m
+[0m[[0m[31merror[0m] [0m[0m^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/jakub/Projects/StringPatternMatching/StringPatternMatching/src/main/scala/Main.scala:15:3: expected class or object definition[0m
+[0m[[0m[31merror[0m] [0m[0m  val TEST_Keywords: List[String] = List("Scala", "functional", "language", "powerful", "object-oriented", "paradigms", "developers", "support")[0m
+[0m[[0m[31merror[0m] [0m[0m  ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/jakub/Projects/StringPatternMatching/StringPatternMatching/src/main/scala/Main.scala:19:3: expected class or object definition[0m
+[0m[[0m[31merror[0m] [0m[0m  val FSM = FiniteStateMachine(TEST_SearchString,TEST_Keywords)[0m
+[0m[[0m[31merror[0m] [0m[0m  ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/jakub/Projects/StringPatternMatching/StringPatternMatching/src/main/scala/Main.scala:25:3: expected class or object definition[0m
+[0m[[0m[31merror[0m] [0m[0m  prettyprint(FSM.PMM(),TEST_SearchString)[0m
+[0m[[0m[31merror[0m] [0m[0m  ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/jakub/Projects/StringPatternMatching/StringPatternMatching/src/main/scala/Main.scala:38:1: expected class or object definition[0m
+[0m[[0m[31merror[0m] [0m[0mdef prettyprint(ls : List[(Int, String)], fulltext : String) : Unit =[0m
+[0m[[0m[31merror[0m] [0m[0m^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/jakub/Projects/StringPatternMatching/StringPatternMatching/src/main/scala/StateParser.scala:3:1: expected class or object definition[0m
+[0m[[0m[31merror[0m] [0m[0mval ahoCorasickGraph: Map[Int, State] = Map([0m
+[0m[[0m[31merror[0m] [0m[0m^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/jakub/Projects/StringPatternMatching/StringPatternMatching/src/main/scala/StateParser.scala:18:1: expected class or object definition[0m
+[0m[[0m[31merror[0m] [0m[0mdef buildGraph(keywords: List[String]): Map[Int, State] = {[0m
+[0m[[0m[31merror[0m] [0m[0m^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/jakub/Projects/StringPatternMatching/StringPatternMatching/src/main/scala/StateParser.scala:52:1: expected class or object definition[0m
+[0m[[0m[31merror[0m] [0m[0mdef printGraph(states: Map[Int, State]): Unit = {[0m
+[0m[[0m[31merror[0m] [0m[0m^[0m
+[0m[[0m[31merror[0m] [0m[0m11 errors found[0m

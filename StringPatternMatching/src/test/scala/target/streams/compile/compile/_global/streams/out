@@ -1,0 +1,28 @@
+[0m[[0m[31merror[0m] [0m[0m/home/jakub/Projects/StringPatternMatching/StringPatternMatching/src/test/scala/BasicTest.scala:1:12: object scalatest is not a member of package org[0m
+[0m[[0m[31merror[0m] [0m[0mimport org.scalatest.flatspec.AnyFlatSpec[0m
+[0m[[0m[31merror[0m] [0m[0m           ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/jakub/Projects/StringPatternMatching/StringPatternMatching/src/test/scala/BasicTest.scala:2:12: object scalatest is not a member of package org[0m
+[0m[[0m[31merror[0m] [0m[0mimport org.scalatest.matchers.should.Matchers[0m
+[0m[[0m[31merror[0m] [0m[0m           ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/jakub/Projects/StringPatternMatching/StringPatternMatching/src/test/scala/BasicTest.scala:4:25: not found: type AnyFlatSpec[0m
+[0m[[0m[31merror[0m] [0m[0mclass BasicTest extends AnyFlatSpec with Matchers {[0m
+[0m[[0m[31merror[0m] [0m[0m                        ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/jakub/Projects/StringPatternMatching/StringPatternMatching/src/test/scala/BasicTest.scala:4:42: not found: type Matchers[0m
+[0m[[0m[31merror[0m] [0m[0mclass BasicTest extends AnyFlatSpec with Matchers {[0m
+[0m[[0m[31merror[0m] [0m[0m                                         ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/jakub/Projects/StringPatternMatching/StringPatternMatching/src/test/scala/BasicTest.scala:6:17: value should is not a member of String[0m
+[0m[[0m[31merror[0m] [0m[0m  "A test case" should "pass when the condition is true" in {[0m
+[0m[[0m[31merror[0m] [0m[0m                ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/jakub/Projects/StringPatternMatching/StringPatternMatching/src/test/scala/BasicTest.scala:8:12: value shouldEqual is not a member of Int[0m
+[0m[[0m[31merror[0m] [0m[0m    result shouldEqual 4[0m
+[0m[[0m[31merror[0m] [0m[0m           ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/jakub/Projects/StringPatternMatching/StringPatternMatching/src/test/scala/BasicTest.scala:11:3: not found: value it[0m
+[0m[[0m[31merror[0m] [0m[0m  it should "fail when the condition is false" in {[0m
+[0m[[0m[31merror[0m] [0m[0m  ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/jakub/Projects/StringPatternMatching/StringPatternMatching/src/test/scala/BasicTest.scala:13:12: value should is not a member of Int[0m
+[0m[[0m[31merror[0m] [0m[0m    result should not equal 5[0m
+[0m[[0m[31merror[0m] [0m[0m           ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/jakub/Projects/StringPatternMatching/StringPatternMatching/src/test/scala/BasicTest.scala:13:19: not found: value not[0m
+[0m[[0m[31merror[0m] [0m[0m    result should not equal 5[0m
+[0m[[0m[31merror[0m] [0m[0m                  ^[0m
+[0m[[0m[31merror[0m] [0m[0m9 errors found[0m
