@@ -1,7 +1,6 @@
 package main
 
 
-import concurrent.*
 
 case class State(ID: Integer, Successor: Map[String, Int], endState: Boolean, keyword: Option[String] = None) // all states have an own ID and a single successor which is mapped by its input, also known by its ID
 
@@ -18,7 +17,7 @@ class FiniteStateMachine(SearchText: String, Keywords: List[String]) {
   private val states: Map[Int, State] = buildGraph(Keywords) // This map represents the finite state machine
   private val text: String = SearchText
   private var keywords: List[String] = Keywords
-  private val fails : Map[Int,Int] = con_computeFail(states)
+  private val fails : Map[Int,Int] = computeFail(states)
 
   private var currentStateID: Int = 0 // starting State is by default 0 !
 
