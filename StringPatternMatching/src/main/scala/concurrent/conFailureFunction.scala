@@ -1,5 +1,5 @@
-package main
-
+package concurrent
+import main.State
 import scala.collection.concurrent.TrieMap
 import scala.collection.mutable
 import scala.collection.parallel.CollectionConverters._
