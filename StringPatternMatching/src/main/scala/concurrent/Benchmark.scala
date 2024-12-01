@@ -62,10 +62,10 @@ object Benchmark {
       }
 
       // Save the results to a file
-      val writer = new BufferedWriter(new FileWriter(new File(s"benchmark_results_${textFile}_vs_${keywordFile}.txt")))
+     /* val writer = new BufferedWriter(new FileWriter(new File(s"benchmark_results_${textFile}_vs_${keywordFile}.txt")))
       writer.write(s"Normal FSM: $normalTime ms\n")
       writer.write(s"Concurrent FSM: $concurrentTime ms\n")
-      writer.close()
+      writer.close()*/
     }
   }
 
