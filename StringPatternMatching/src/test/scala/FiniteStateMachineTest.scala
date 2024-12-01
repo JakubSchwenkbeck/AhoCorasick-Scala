@@ -35,6 +35,20 @@ class FiniteStateMachineTest extends AnyFlatSpec with Matchers {
     // Assert that the output matches the expectation
     actualMatches shouldEqual expectedMatches
   }
+  it should "be deterministicc in returning the same value for the same inputs (Leibniz principle)" in{
+    val searchString =
+      "Scala is a functionally programming language that is powerful, concise, and expressive."
+    val keywords = List("Scala", "functional", "language", "powerful", "expressive", "missing")
+
+
+    // Instantiate and run the FSM
+    val fsm1 = FiniteStateMachine(searchString, keywords)
+    val matches1 = fsm1.PMM()
+    val fsm2 = FiniteStateMachine(searchString, keywords)
+    val matches2= fsm2.PMM()
+
+    matches1 shouldEqual matches2
+  }
 
   it should "return an empty list if no keywords match" in {
     // Input for the FSM
