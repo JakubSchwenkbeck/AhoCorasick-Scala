@@ -5,6 +5,7 @@ import Main.*
 import java.nio.file.StandardOpenOption.*
 import java.nio.file.{Files, Paths}
 import scala.io.Source
+import concurrent.*
 
 /**
  * Searches for occurrences of keywords within a string and prints the result in a formatted way.
@@ -53,7 +54,24 @@ def searchFile(inputFile: String, keywordsFile: String, outputFile: String): Uni
 
   // Write the original text and search results to the output file
    writeToFile(outputPath.toString,   highlightSubstrings(str,res))
+def con_searchFile(inputFile: String, keywordsFile: String, outputFile: String): Unit =
+    val inputPath = Paths.get(inputFile).toAbsolutePath
+    val keywordsPath = Paths.get(keywordsFile).toAbsolutePath
+    val outputPath = Paths.get(outputFile).toAbsolutePath
 
+    // Read the content of the input and keywords files
+    val str = readFile_String(inputPath.toString)
+    val ls = readFile_List(keywordsPath.toString)
+
+    // Perform keyword searching using the Finite State Machine
+    val res = ParallelPatternMatchingMachine(str, ls).PMM()
+
+
+
+    // Write the original text and search results to the output file
+    writeToFile(outputPath.toString, highlightSubstrings(str, res))
+def con_searchString(str: String, ls: List[String]): Unit =
+    prettyprint(ParallelPatternMatchingMachine(str, ls).PMM(), str)
 def searchAndMatch(str:String, keywords : List[String]) : List[(Int,String)] = {
   FiniteStateMachine(str, keywords).PMM()
 }
