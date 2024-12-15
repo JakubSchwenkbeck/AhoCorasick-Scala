@@ -31,7 +31,7 @@ jobs:
         distribution: 'temurin'
         cache: 'sbt'
 
-    # Step 4: Run tests (if you have a test suite)
+    # Step 4: Run tests 
     - name: Run tests
       working-directory: ./StringPatternMatching
       run: sbt test
