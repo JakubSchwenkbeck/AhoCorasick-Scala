@@ -1,13 +1,6 @@
 # **String Pattern Matching with Aho-Corasick Algorithm**
 
 ## **Overview**
-This project implements the Aho-Corasick algorithm for **efficient multi-pattern string matching**. The Aho-Corasick algorithm is widely used in applications such as text searching, bioinformatics, and network security, as it allows matching multiple patterns simultaneously in linear time. This project demonstrates its practical use by providing both an **educational** and **application-focused** approach to the algorithm.
-
-The implementation is written in **Scala**, chosen for its elegant combination of **functional programming** and **object-oriented paradigms**. This project serves not only as an exercise in algorithmic problem-solving but also as a demonstration of how to apply Scala’s strengths to real-world problems.
-
-# **String Pattern Matching with Aho-Corasick Algorithm**
-
-## **Overview**
 This project implements the Aho-Corasick algorithm for **efficient multi-pattern string matching**. The Aho-Corasick algorithm is widely used in applications such as text searching, bioinformatics, and network security, as it allows matching multiple patterns simultaneously in linear time. This project demonstrates its practical use by providing both an **educational** and **performance-focused** approach to the algorithm.
 
 The implementation is written in **Scala**, chosen for its elegant combination of **functional programming** and **object-oriented paradigms**. This project serves not only as an exercise in algorithmic problem-solving but also as a demonstration of how to apply Scala’s strengths to real-world problems.
